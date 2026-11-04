@@ -15,7 +15,7 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                try {
-                   JFrame accountFrame = new JFrame("DEPARTMENT MANAGEMENT");
+                   JFrame accountFrame = new JFrame("Administrator");
                    AdminWindow admin = new AdminWindow();
                    JPanel adminPanel = admin.getAdminPanel();
                    if(adminPanel == null){
@@ -25,7 +25,7 @@ public class Main {
                    }
                    accountFrame.setContentPane(adminPanel);
                    accountFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                   accountFrame.pack();
+                   accountFrame.setSize(1150,750);
                    accountFrame.setLocationRelativeTo(null);
                    accountFrame.setVisible(true);
 
