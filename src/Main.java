@@ -8,7 +8,7 @@ public class Main {
     private JButton SIGNINButton;
     private JButton createAGuestAccountButton;
     private JPasswordField passwordField1;
-    private JLabel coconutTree;
+
 
     public Main() {
         SIGNINButton.addActionListener(new ActionListener() {
