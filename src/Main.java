@@ -1,19 +1,54 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
     private JPanel mainPanel;
     private JTextField textField1;
-    private JTextField textField2;
     private JButton SIGNINButton;
     private JButton createAGuestAccountButton;
+    private JPasswordField passwordField1;
+    private JLabel coconutTree;
 
+    public Main() {
+        SIGNINButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               try {
+                   JFrame accountFrame = new JFrame("DEPARTMENT MANAGEMENT");
+                   AdminWindow admin = new AdminWindow();
+                   JPanel adminPanel = admin.getAdminPanel();
+                   if(adminPanel == null){
+                       JOptionPane.showMessageDialog(null,
+                               "Error: getAdminPanel() returned null. Check deptForm.java",
+                               "NULL PANEL ERROR", JOptionPane.ERROR_MESSAGE);
+                   }
+                   accountFrame.setContentPane(adminPanel);
+                   accountFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                   accountFrame.pack();
+                   accountFrame.setLocationRelativeTo(null);
+                   accountFrame.setVisible(true);
+
+                   JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                   if(currentFrame != null) {
+                       currentFrame.dispose();
+                   }
+               }catch(Exception ex){ex.printStackTrace();}
+            }
+        });
+    }
+    public JPanel getMainPanel(){
+        return mainPanel;
+    }
     public static void main(String[] args){
-        JFrame frame = new JFrame("Hotel and Resort Management System");
-        frame.setContentPane(new Main().mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setSize(550,750);
+        SwingUtilities.invokeLater(()->{
+            JFrame frame = new JFrame("Hotel and Resort Management System");
+            frame.setContentPane(new Main().mainPanel);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setSize(550,750);
+        });
     }
 }
