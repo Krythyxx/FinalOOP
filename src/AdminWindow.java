@@ -69,10 +69,16 @@ public class AdminWindow{
     private JLabel lbl;
     private JPanel pnlRsrvtn;
 
+
+
     DefaultTableModel tableAdminDashboard =new DefaultTableModel();
     DefaultTableModel tableAdminReservation = new DefaultTableModel();
+
     int count = 0,xrow = 0;
+
     public AdminWindow(){
+
+        //For Admin Dashboard
         tableAdminDashboard.addColumn("ID");
         tableAdminDashboard.addColumn("GUEST");
         tableAdminDashboard.addColumn("ROOM");
@@ -82,6 +88,8 @@ public class AdminWindow{
         tableAdminDashboard.addColumn("STATUS");
         tblAdminDashboard.setModel(tableAdminDashboard);
 
+
+        //For Admin Reservation
         tableAdminReservation.addColumn("ID");
         tableAdminReservation.addColumn("GUEST");
         tableAdminReservation.addColumn("EMAIL");
@@ -99,6 +107,7 @@ public class AdminWindow{
     public JPanel getAdminPanel(){return adminPanel;}
 
     private void createUIComponents() {
+
         tblAdminDashboard = new JTable();
         JTableHeader hdrAdminDashboard = tblAdminDashboard.getTableHeader();
         hdrAdminDashboard.setOpaque(true);
@@ -115,6 +124,7 @@ public class AdminWindow{
                 return c;
             }
         });
+
         scrlPnAdminDash = new JScrollPane(tblAdminDashboard);
         scrlPnAdminDash.getViewport().setBackground(new Color(30, 40, 50));
         scrlPnAdminDash.setBackground(new Color(30, 40, 50));
