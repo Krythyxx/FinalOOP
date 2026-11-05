@@ -114,7 +114,7 @@
                       <text value="OCCUPIED ROOMS"/>
                     </properties>
                   </component>
-                  <component id="8f652" class="javax.swing.JTextField" binding="txtOccupedRooms">
+                  <component id="8f652" class="javax.swing.JTextField" binding="txtOccupiedRooms">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -149,7 +149,7 @@
                       <text value="CHECK-INS TODAY"/>
                     </properties>
                   </component>
-                  <component id="fc918" class="javax.swing.JTextField" binding="txtChkIns">
+                  <component id="fc918" class="javax.swing.JTextField" binding="btnCheckIns">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -184,7 +184,7 @@
                       <text value="PENDING REQUESTS"/>
                     </properties>
                   </component>
-                  <component id="bac4b" class="javax.swing.JTextField" binding="txtCPendignReq">
+                  <component id="bac4b" class="javax.swing.JTextField" binding="txtCPendingRequest">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -219,7 +219,7 @@
                       <text value="POTENTIAL REVENUE"/>
                     </properties>
                   </component>
-                  <component id="105b2" class="javax.swing.JTextField" binding="txtPotRevenue">
+                  <component id="105b2" class="javax.swing.JTextField" binding="txtPotentialRevenue">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -363,7 +363,7 @@
                       <text value="Phone"/>
                     </properties>
                   </component>
-                  <component id="10b60" class="javax.swing.JTextField" binding="txtCreateRsrv">
+                  <component id="10b60" class="javax.swing.JTextField" binding="txtCreateReservation">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -423,7 +423,7 @@
                       <text value="Check-out"/>
                     </properties>
                   </component>
-                  <component id="b8c15" class="javax.swing.JComboBox" binding="cmbChkIn">
+                  <component id="b8c15" class="javax.swing.JComboBox" binding="cmbCheckIn">
                     <constraints>
                       <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -432,7 +432,7 @@
                       <foreground color="-922881"/>
                     </properties>
                   </component>
-                  <component id="e0751" class="javax.swing.JComboBox" binding="cmbChkOut">
+                  <component id="e0751" class="javax.swing.JComboBox" binding="cmbCheckOut">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -468,7 +468,7 @@
                       <text value="Comments"/>
                     </properties>
                   </component>
-                  <component id="2c5ca" class="javax.swing.JSpinner" binding="spnrGuestNum">
+                  <component id="2c5ca" class="javax.swing.JSpinner" binding="spnrNumberOfGuest">
                     <constraints>
                       <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -477,7 +477,7 @@
                       <foreground color="-922881"/>
                     </properties>
                   </component>
-                  <component id="a02f9" class="javax.swing.JTextField" binding="txtSpReq">
+                  <component id="a02f9" class="javax.swing.JTextField" binding="txtSpecialRequest">
                     <constraints>
                       <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -536,7 +536,7 @@
                       <text value="Extra Guest Charge(200 per guest over Max Capacity):"/>
                     </properties>
                   </component>
-                  <component id="a6ce7" class="javax.swing.JTextField" binding="txtXtraCharge">
+                  <component id="a6ce7" class="javax.swing.JTextField" binding="txtExtraCharge">
                     <constraints>
                       <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -558,7 +558,7 @@
                       <text value="Total:"/>
                     </properties>
                   </component>
-                  <component id="9d6de" class="javax.swing.JTextField" binding="textField14" default-binding="true">
+                  <component id="9d6de" class="javax.swing.JTextField" binding="txtTotal">
                     <constraints>
                       <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -569,7 +569,7 @@
                       <editable value="false"/>
                     </properties>
                   </component>
-                  <component id="4b88c" class="javax.swing.JButton" binding="addReservationButton" default-binding="true">
+                  <component id="4b88c" class="javax.swing.JButton" binding="btnAddReservation">
                     <constraints>
                       <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -580,7 +580,7 @@
                       <text value="+Add Reservation"/>
                     </properties>
                   </component>
-                  <component id="f57ba" class="javax.swing.JButton" binding="clearFormButton" default-binding="true">
+                  <component id="f57ba" class="javax.swing.JButton" binding="btnClearForm">
                     <constraints>
                       <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -590,7 +590,7 @@
                       <text value="Clear Form"/>
                     </properties>
                   </component>
-                  <component id="ff543" class="javax.swing.JComboBox" binding="cmbRsrvRoom">
+                  <component id="ff543" class="javax.swing.JComboBox" binding="cmbRoom">
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -601,7 +601,7 @@
                   </component>
                 </children>
               </grid>
-              <component id="d59f7" class="javax.swing.JTextField" binding="searchByGuestNameTextField" default-binding="true">
+              <component id="d59f7" class="javax.swing.JTextField" binding="txtSearch">
                 <constraints>
                   <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -612,7 +612,7 @@
                   <text value="Search by guest name or room"/>
                 </properties>
               </component>
-              <component id="5f2b7" class="javax.swing.JComboBox" binding="comboBox3" default-binding="true">
+              <component id="5f2b7" class="javax.swing.JComboBox" binding="cmbFilter">
                 <constraints>
                   <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -620,7 +620,7 @@
                   <background color="-14467499"/>
                 </properties>
               </component>
-              <component id="18f94" class="javax.swing.JButton" binding="btnAcceptReq">
+              <component id="18f94" class="javax.swing.JButton" binding="btnAcceptRequest">
                 <constraints>
                   <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -631,7 +631,7 @@
                   <text value="Accept Request"/>
                 </properties>
               </component>
-              <component id="6a196" class="javax.swing.JButton" binding="btnDeclienReq">
+              <component id="6a196" class="javax.swing.JButton" binding="btnDeclineRequest">
                 <constraints>
                   <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -642,7 +642,7 @@
                   <text value="Decline Request"/>
                 </properties>
               </component>
-              <component id="d3acd" class="javax.swing.JButton" binding="btnChkIn">
+              <component id="d3acd" class="javax.swing.JButton" binding="btnCheckIn">
                 <constraints>
                   <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -653,7 +653,7 @@
                   <text value="Check-In"/>
                 </properties>
               </component>
-              <component id="585a0" class="javax.swing.JButton" binding="btnChkOut">
+              <component id="585a0" class="javax.swing.JButton" binding="btnCheckOut">
                 <constraints>
                   <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -794,7 +794,7 @@
                       <text value="ROOM TYPE"/>
                     </properties>
                   </component>
-                  <component id="73276" class="javax.swing.JTextField" binding="textField16" default-binding="true">
+                  <component id="73276" class="javax.swing.JTextField" binding="txtRoomNumber">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -805,7 +805,7 @@
                       <foreground color="-922881"/>
                     </properties>
                   </component>
-                  <component id="4d897" class="javax.swing.JComboBox" binding="comboBox4" default-binding="true">
+                  <component id="4d897" class="javax.swing.JComboBox" binding="cmbRoomType">
                     <constraints>
                       <grid row="2" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -839,7 +839,7 @@
                       <text value="STATUS"/>
                     </properties>
                   </component>
-                  <component id="144b7" class="javax.swing.JSpinner" binding="spinner2" default-binding="true">
+                  <component id="144b7" class="javax.swing.JSpinner" binding="spnrMaxCapacity">
                     <constraints>
                       <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -847,7 +847,7 @@
                       <background color="-15063755"/>
                     </properties>
                   </component>
-                  <component id="4be36" class="javax.swing.JComboBox" binding="comboBox5" default-binding="true">
+                  <component id="4be36" class="javax.swing.JComboBox" binding="cmbStatus">
                     <constraints>
                       <grid row="4" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -860,7 +860,7 @@
                       </model>
                     </properties>
                   </component>
-                  <component id="5406c" class="javax.swing.JButton" binding="addRoomButton" default-binding="true">
+                  <component id="5406c" class="javax.swing.JButton" binding="btnAddButton">
                     <constraints>
                       <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -871,7 +871,7 @@
                       <text value="Add Room"/>
                     </properties>
                   </component>
-                  <component id="de165" class="javax.swing.JTextField" binding="textField17" default-binding="true">
+                  <component id="de165" class="javax.swing.JTextField" binding="txtPrice">
                     <constraints>
                       <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -892,7 +892,7 @@
                       <text value="PRICE/NIGHT(IN PESOS)"/>
                     </properties>
                   </component>
-                  <component id="d18bd" class="javax.swing.JTextField" binding="textField18" default-binding="true">
+                  <component id="d18bd" class="javax.swing.JTextField" binding="txtDescription">
                     <constraints>
                       <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -913,7 +913,7 @@
                       <text value="DESCRIPTION"/>
                     </properties>
                   </component>
-                  <component id="1f942" class="javax.swing.JButton" binding="updateSelectedButton" default-binding="true">
+                  <component id="1f942" class="javax.swing.JButton" binding="btnUpdateSelected">
                     <constraints>
                       <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -923,7 +923,7 @@
                       <text value="Update Selected"/>
                     </properties>
                   </component>
-                  <component id="d869e" class="javax.swing.JButton" binding="deleteSelectedButton" default-binding="true">
+                  <component id="d869e" class="javax.swing.JButton" binding="btnDeleteSelected">
                     <constraints>
                       <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -1062,7 +1062,7 @@
                       <text value="PASSWORD"/>
                     </properties>
                   </component>
-                  <component id="55cd7" class="javax.swing.JTextField" binding="textField19" default-binding="true">
+                  <component id="55cd7" class="javax.swing.JTextField" binding="txtFullName">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -1071,9 +1071,10 @@
                     <properties>
                       <background color="-14668222"/>
                       <foreground color="-922881"/>
+                      <text value=""/>
                     </properties>
                   </component>
-                  <component id="2b9f2" class="javax.swing.JTextField" binding="textField20" default-binding="true">
+                  <component id="2b9f2" class="javax.swing.JTextField" binding="txtUsername">
                     <constraints>
                       <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -1084,7 +1085,7 @@
                       <foreground color="-922881"/>
                     </properties>
                   </component>
-                  <component id="e71cc" class="javax.swing.JTextField" binding="textField21" default-binding="true">
+                  <component id="e71cc" class="javax.swing.JTextField" binding="txtPassword">
                     <constraints>
                       <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -1106,7 +1107,7 @@
                       <text value="Role"/>
                     </properties>
                   </component>
-                  <component id="a1abc" class="javax.swing.JRadioButton" binding="staffRadioButton" default-binding="true">
+                  <component id="a1abc" class="javax.swing.JRadioButton" binding="rbStaff">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -1117,7 +1118,7 @@
                       <text value="Staff"/>
                     </properties>
                   </component>
-                  <component id="37c19" class="javax.swing.JRadioButton" binding="guestRadioButton" default-binding="true">
+                  <component id="37c19" class="javax.swing.JRadioButton" binding="rbGuest">
                     <constraints>
                       <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -1128,7 +1129,7 @@
                       <text value="Guest"/>
                     </properties>
                   </component>
-                  <component id="c482d" class="javax.swing.JButton" binding="addUserButton" default-binding="true">
+                  <component id="c482d" class="javax.swing.JButton" binding="btnAddUser">
                     <constraints>
                       <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -1139,7 +1140,7 @@
                       <text value="+Add User"/>
                     </properties>
                   </component>
-                  <component id="52038" class="javax.swing.JButton" binding="deleteUserButton" default-binding="true">
+                  <component id="52038" class="javax.swing.JButton" binding="btnDeleteUser">
                     <constraints>
                       <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -1149,7 +1150,7 @@
                       <text value="Delete User"/>
                     </properties>
                   </component>
-                  <component id="3b849" class="javax.swing.JRadioButton" binding="adminRadioButton" default-binding="true">
+                  <component id="3b849" class="javax.swing.JRadioButton" binding="rbAdmin">
                     <constraints>
                       <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>

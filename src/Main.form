@@ -42,7 +42,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="5939c" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="5939c" class="javax.swing.JTextField" binding="txtUsername">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="350" height="60"/>
@@ -56,7 +56,7 @@
               <horizontalAlignment value="0"/>
             </properties>
           </component>
-          <component id="f4ada" class="javax.swing.JButton" binding="SIGNINButton" default-binding="true">
+          <component id="f4ada" class="javax.swing.JButton" binding="btnSignIn">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="350" height="60"/>
@@ -78,7 +78,7 @@
               <text value="---- or ----"/>
             </properties>
           </component>
-          <component id="c5543" class="javax.swing.JButton" binding="createAGuestAccountButton" default-binding="true">
+          <component id="c5543" class="javax.swing.JButton" binding="btnCreateAcc">
             <constraints>
               <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="350" height="60"/>
@@ -124,7 +124,7 @@
               </grid>
             </constraints>
           </vspacer>
-          <component id="159d0" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+          <component id="159d0" class="javax.swing.JPasswordField" binding="txtPassword">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="350" height="60"/>
