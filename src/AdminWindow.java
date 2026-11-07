@@ -31,8 +31,6 @@ public class AdminWindow{
     private JTextField txtEmail;
     private JTextField txtPhone;
     private JComboBox cmbReservationRoom;
-    private JComboBox cmbCheckIn;
-    private JComboBox cmbCheckOut;
     private JSpinner spnrNumberOfGuest;
     private JTextField txtSpecialRequest;
     private JTextField txtComments;
@@ -180,26 +178,56 @@ public class AdminWindow{
                     txtEmail.setText(col2 != null ? col2.toString() : "");
                     txtPhone.setText(col3 != null ? col3.toString() : "");
                     cmbReservationRoom.setSelectedItem(col4 != null ? col4.toString() : "");
-                    cmbCheckIn.setSelectedItem(col5 != null ? col5.toString() : "");
-                    cmbCheckOut.setSelectedItem(col6 != null ? col6.toString() : "");
-                    txtBaseTotal.setText(col3 != null ? col7.toString() : "");
-                    txtExtraCharge.setText(col3 != null ? col8.toString() : "");
-                    txtTotal.setText(col3 != null ? col9.toString() : "");
+                    txtCheckIn.setText(col5 != null ? col5.toString() : "");
+                    txtCheckOut.setText(col6 != null ? col6.toString() : "");
+                    txtBaseTotal.setText(col7 != null ? col7.toString() : "");
+                    txtExtraCharge.setText(col8 != null ? col8.toString() : "");
+                    txtTotal.setText(col9 != null ? col9.toString() : "");
                 }
             }
         });
 
+        
         btnAddReservation.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //check reservation.java
+                Object room = cmbReservationRoom.getSelectedItem();
 
+                Reservation rsv = new Reservation(
+                        tableAdminReservation.getRowCount() + 1,
+                        txtGuestName.getText().trim(),
+                        txtEmail.getText().trim(),
+                        txtPhone.getText().trim(),
+                        room == null ? "" : room.toString(),
+                        txtCheckIn.getText().trim(),
+                        txtCheckOut.getText().trim(),
+                        (Integer) spnrNumberOfGuest.getValue(),
+                        txtSpecialRequest.getText(),
+                        txtComments.getText(),
+                        parseMoney(txtBaseTotal),
+                        parseMoney(txtExtraCharge));
+
+
+                String error = rsv.validate();
+                if (error != null) {
+                    JOptionPane.showMessageDialog(null, error);
+                    return;
+                }
+                tableAdminReservation.addRow(rsv.toRow());
             }
         });
 
 
     }
 
+    //convert string to double
+    private double parseMoney(JTextField f) {
+        try {
+            return Double.parseDouble(f.getText().trim());
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+    }
 
     //Table Design
     public JPanel getAdminPanel(){return adminPanel;}
