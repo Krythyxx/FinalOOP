@@ -149,7 +149,7 @@
                       <text value="CHECK-INS TODAY"/>
                     </properties>
                   </component>
-                  <component id="fc918" class="javax.swing.JTextField" binding="btnCheckIns">
+                  <component id="fc918" class="javax.swing.JTextField" binding="txtCheckIns">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -354,7 +354,7 @@
                       <text value="Phone"/>
                     </properties>
                   </component>
-                  <component id="10b60" class="javax.swing.JTextField" binding="txtCreateReservation">
+                  <component id="10b60" class="javax.swing.JTextField" binding="txtGuestName">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -583,7 +583,7 @@
                       <text value="Clear Form"/>
                     </properties>
                   </component>
-                  <component id="ff543" class="javax.swing.JComboBox" binding="cmbRoom">
+                  <component id="ff543" class="javax.swing.JComboBox" binding="cmbReservationRoom">
                     <constraints>
                       <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -880,7 +880,7 @@
                       </model>
                     </properties>
                   </component>
-                  <component id="5406c" class="javax.swing.JButton" binding="btnAddButton">
+                  <component id="5406c" class="javax.swing.JButton" binding="btnAddRoom">
                     <constraints>
                       <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>

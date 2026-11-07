@@ -5,18 +5,18 @@ import java.awt.event.ActionListener;
 public class Main {
     private JPanel mainPanel;
     private JTextField txtUsername;
-    private JButton SIGNINButton;
-    private JButton createAGuestAccountButton;
-    private JPasswordField passwordField1;
+    private JButton btnSignIn;
+    private JButton btnCreateAcc;
+    private JPasswordField txtPassword;
 
 
     public Main() {
-        SIGNINButton.addActionListener(new ActionListener() {
+       btnSignIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                try {
-                   String userInput = txtUsername.getText().trim();
-                   if(userInput.equals("admin")){
+                   String username = txtUsername.getText().trim();
+                   if(username.equals("admin")){
                        JFrame adminFrame = new JFrame("Administrator");
                        AdminWindow admin = new AdminWindow();
                        JPanel adminPanel = admin.getAdminPanel();
@@ -35,7 +35,7 @@ public class Main {
                        if(currentFrame != null) {
                            currentFrame.dispose();
                        }
-                   } else if (userInput.equals("staff")) {
+                   } else if (username.equals("staff")) {
                        JFrame staffFrame = new JFrame("Staff");
                        StaffWindow staff = new StaffWindow();
                        JPanel staffPanel = staff.getStaffPanel();
@@ -54,7 +54,7 @@ public class Main {
                        if(currentFrame != null) {
                            currentFrame.dispose();
                        }
-                   } else if (userInput.equals("guest")) {
+                   } else if (username.equals("guest")) {
                        JFrame guestFrame = new JFrame("Staff");
                        GuestWindow guest = new GuestWindow();
                        JPanel guestPanel = guest.getGuestPanel();
@@ -73,7 +73,7 @@ public class Main {
                            currentFrame.dispose();
                        }
                    } else {
-                       JOptionPane.showMessageDialog(null, "Access Denied: Invalid input.", "Error", JOptionPane.ERROR_MESSAGE);
+                       JOptionPane.showMessageDialog(null, "Access Denied: Invalid Username or Password input.", "Error", JOptionPane.ERROR_MESSAGE);
                    }
 
                }catch(Exception ex){ex.printStackTrace();}
