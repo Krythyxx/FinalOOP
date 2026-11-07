@@ -30,7 +30,7 @@ public class Reservation {
         if (guestName.isBlank()) return "Guest name is required.";
         if (!email.matches("^[\\w.+-]+@[\\w-]+\\.[\\w.]+$")) return "Enter a valid email.";
         if (!phone.matches("\\d{7,13}")) return "Phone must be 7-13 digits.";
-        if (room.isBlank()) return "Select a room.";
+
         if (checkIn.isBlank() || checkOut.isBlank()) return "Enter check-in and check-out dates.";
 
         LocalDate in, out;

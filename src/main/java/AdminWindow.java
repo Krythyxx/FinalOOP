@@ -5,13 +5,20 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableRowSorter;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class AdminWindow{
-    // General Elements
     private JButton btnLogOut;
     private JPanel adminPanel;
     private JTabbedPane tabbedPane1;
@@ -50,6 +57,8 @@ public class AdminWindow{
     private JTable tblAdminRsrv;
     private JTextField txtCheckIn;
     private JTextField txtCheckOut;
+    private TableRowSorter<DefaultTableModel> sorter;
+    private static final String SEARCH_HINT = "Search by guest name or room";
 
     //For Admin Rooms Tab
     private JTable tblAdminRooms;
@@ -114,6 +123,27 @@ public class AdminWindow{
         tableAdminReservation.addColumn("TOTAL");
         tableAdminReservation.addColumn("STATUS");
         tblAdminRsrv.setModel(tableAdminReservation);
+        sorter = new TableRowSorter<>(tableAdminReservation);
+        tblAdminRsrv.setRowSorter(sorter);
+
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e)  { applyFilter(); }
+            public void removeUpdate(DocumentEvent e)  { applyFilter(); }
+            public void changedUpdate(DocumentEvent e) { applyFilter(); }
+        });
+        cmbFilter.addActionListener(e -> applyFilter());
+
+        //visual guide for search bar
+        txtSearch.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtSearch.getText().equals(SEARCH_HINT)) txtSearch.setText("");
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (txtSearch.getText().isBlank()) txtSearch.setText(SEARCH_HINT);
+            }
+        });
 
         tableAdminRooms.addColumn("ID");
         tableAdminRooms.addColumn("ROOM NO.");
@@ -153,6 +183,82 @@ public class AdminWindow{
             }
         });
 
+        //Reservation Button
+        btnAddReservation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object room = cmbReservationRoom.getSelectedItem();
+
+                Reservation rsv = new Reservation(
+                        tableAdminReservation.getRowCount() + 1,
+                        txtGuestName.getText().trim(),
+                        txtEmail.getText().trim(),
+                        txtPhone.getText().trim(),
+                        room == null ? "" : room.toString(),
+                        txtCheckIn.getText().trim(),
+                        txtCheckOut.getText().trim(),
+                        (Integer) spnrNumberOfGuest.getValue(),
+                        txtSpecialRequest.getText(),
+                        txtComments.getText(),
+                        parseMoney(txtBaseTotal),
+                        parseMoney(txtExtraCharge));
+
+
+                String error = rsv.validate();
+                if (error != null) {
+                    JOptionPane.showMessageDialog(null, error);
+                    return;
+                }
+                tableAdminReservation.addRow(rsv.toRow());
+            }
+        });
+
+        //Clear Button
+        btnClearForm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tblAdminRsrv.clearSelection();
+
+                txtGuestName.setText("");
+                txtEmail.setText("");
+                txtPhone.setText("");
+                txtCheckIn.setText("");
+                txtCheckOut.setText("");
+                txtSpecialRequest.setText("");
+                txtComments.setText("");
+                txtBaseTotal.setText("");
+                txtExtraCharge.setText("");
+                txtTotal.setText("");
+
+                spnrNumberOfGuest.setValue(0);
+
+                if (cmbReservationRoom.getItemCount() > 0) {
+                    cmbReservationRoom.setSelectedIndex(0);
+                }
+            }
+        });
+
+        //status buttons
+        btnAcceptRequest.addActionListener(e -> changeStatus("Confirmed", "Pending"));
+        btnDeclineRequest.addActionListener(e -> changeStatus("Declined", "Pending"));
+        btnCheckIn.addActionListener(e -> changeStatus("Checked in", "Confirmed"));
+        btnCheckOut.addActionListener(e -> changeStatus("Checked Out", "Checked in"));
+        btnCancel.addActionListener(e -> changeStatus("Cancelled", "Pending", "Confirmed"));
+        btnDelete.addActionListener(e -> {
+            int viewRow = tblAdminRsrv.getSelectedRow();
+            if (viewRow == -1) {
+                JOptionPane.showMessageDialog(null, "Select a reservation first.");
+                return;
+            }
+            int confirm = JOptionPane.showConfirmDialog(null,
+                    "Delete this reservation?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                int modelRow = tblAdminRsrv.convertRowIndexToModel(viewRow);
+                tableAdminReservation.removeRow(modelRow);
+                btnClearForm.doClick();
+            }
+        });
+
 
         tblAdminRsrv.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -187,37 +293,46 @@ public class AdminWindow{
             }
         });
 
-        
-        btnAddReservation.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object room = cmbReservationRoom.getSelectedItem();
+    }
 
-                Reservation rsv = new Reservation(
-                        tableAdminReservation.getRowCount() + 1,
-                        txtGuestName.getText().trim(),
-                        txtEmail.getText().trim(),
-                        txtPhone.getText().trim(),
-                        room == null ? "" : room.toString(),
-                        txtCheckIn.getText().trim(),
-                        txtCheckOut.getText().trim(),
-                        (Integer) spnrNumberOfGuest.getValue(),
-                        txtSpecialRequest.getText(),
-                        txtComments.getText(),
-                        parseMoney(txtBaseTotal),
-                        parseMoney(txtExtraCharge));
+    // handles statuses to make sense
+    private void changeStatus(String newStatus, String... allowedFrom) {
+        int viewRow = tblAdminRsrv.getSelectedRow();
+        if (viewRow == -1) {
+            JOptionPane.showMessageDialog(null, "Select a reservation first.");
+            return;
+        }
 
+        int modelRow = tblAdminRsrv.convertRowIndexToModel(viewRow);
+        String current = String.valueOf(tableAdminReservation.getValueAt(modelRow, 10));
 
-                String error = rsv.validate();
-                if (error != null) {
-                    JOptionPane.showMessageDialog(null, error);
-                    return;
-                }
-                tableAdminReservation.addRow(rsv.toRow());
+        for (String allowed : allowedFrom) {
+            if (allowed.equalsIgnoreCase(current)) {
+                tableAdminReservation.setValueAt(newStatus, modelRow, 10);
+                return;
             }
-        });
+        }
+        JOptionPane.showMessageDialog(null,
+                "Cannot change status to \"" + newStatus + "\" when it is \"" + current + "\".");
+    }
 
+    // Searching in Table
+    private void applyFilter() {
+        List<RowFilter<Object, Object>> filters = new ArrayList<>();
 
+        //only searches the name and room type
+        String text = txtSearch.getText().trim();
+        if (!text.isEmpty() && !text.equals(SEARCH_HINT)) {
+            filters.add(RowFilter.regexFilter("(?i)" + Pattern.quote(text), 1, 4));
+        }
+
+        //all status
+        if (cmbFilter.getSelectedIndex() > 0) {
+            String status = cmbFilter.getSelectedItem().toString();
+            filters.add(RowFilter.regexFilter("(?i)^" + Pattern.quote(status) + "$", 10));
+        }
+
+        sorter.setRowFilter(filters.isEmpty() ? null : RowFilter.andFilter(filters));
     }
 
     //convert string to double
