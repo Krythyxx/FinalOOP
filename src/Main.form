@@ -139,15 +139,13 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="e3ca3" class="javax.swing.JLabel">
+          <vspacer id="38b5c">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <maximum-size width="-1" height="10"/>
+              </grid>
             </constraints>
-            <properties>
-              <foreground color="-11969390"/>
-              <text value="admin - admin123"/>
-            </properties>
-          </component>
+          </vspacer>
         </children>
       </grid>
       <component id="cc3bf" class="javax.swing.JLabel">

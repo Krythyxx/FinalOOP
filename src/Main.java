@@ -55,7 +55,7 @@ public class Main {
                            currentFrame.dispose();
                        }
                    } else if (username.equals("guest")) {
-                       JFrame guestFrame = new JFrame("Staff");
+                       JFrame guestFrame = new JFrame("Guest");
                        GuestWindow guest = new GuestWindow();
                        JPanel guestPanel = guest.getGuestPanel();
                        if(guestPanel == null){
@@ -65,6 +65,7 @@ public class Main {
                        }
                        guestFrame.setContentPane(guestPanel);
                        guestFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                       guestFrame.setSize(1150,750);
                        guestFrame.setLocationRelativeTo(null);
                        guestFrame.setVisible(true);
 
@@ -79,6 +80,30 @@ public class Main {
                }catch(Exception ex){ex.printStackTrace();}
             }
         });
+        btnCreateAcc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                JFrame CreateAccount = new JFrame("Guest");
+                CreateUserWindow newAcc = new CreateUserWindow();
+                JPanel CreateAccountPanel = newAcc.getCreateAccountPanel();
+                if (CreateAccountPanel == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "Error: getAdminPanel() returned null. Check deptForm.java",
+                            "NULL PANEL ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+                CreateAccount.setContentPane(CreateAccountPanel);
+                CreateAccount.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                CreateAccount.setSize(550, 750);
+                CreateAccount.setLocationRelativeTo(null);
+                CreateAccount.setVisible(true);
+
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                if (currentFrame != null) {
+                    currentFrame.dispose();
+                }
+            }
+        });
     }
 
 
@@ -86,7 +111,6 @@ public class Main {
     public JPanel getMainPanel(){
         return mainPanel;
     }
-
 
     //Main Method
     public static void main(String[] args){

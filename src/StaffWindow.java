@@ -17,7 +17,7 @@ public class StaffWindow {
     private JTextField txtChkIns;
     private JTextField txtCPendignReq;
     private JTextField txtPotRevenue;
-    private JScrollPane scrlPnAdminDash;
+    private JScrollPane scrlPnStaffDash;
     private JTable tblStaffDashboard;
     private JPanel pnlRsrvtn;
     private JTextField txtCreateRsrv;
@@ -52,9 +52,11 @@ public class StaffWindow {
     private JTextField textField18;
     private JButton updateSelectedButton;
     private JButton deleteSelectedButton;
-    private JTable tblAdminRooms;
+    private JTable tblStaffRooms;
     private JLabel txtUserName;
     private JTextField txtUserRole;
+    private JScrollPane scrlPnStaffRsrv;
+    private JScrollPane scrlPnStaffRooms;
 
     DefaultTableModel tableStaffDashboard =new DefaultTableModel();
     DefaultTableModel tableStaffReservation = new DefaultTableModel();
@@ -84,6 +86,15 @@ public class StaffWindow {
         tableStaffReservation.addColumn("STATUS");
         tblStaffRsrv.setModel(tableStaffReservation);
 
+        tableStaffRooms.addColumn("ID");
+        tableStaffRooms.addColumn("ROOM NO.");
+        tableStaffRooms.addColumn("TYPE");
+        tableStaffRooms.addColumn("PRICE/NIGHT");
+        tableStaffRooms.addColumn("MAX CAPACITY");
+        tableStaffRooms.addColumn("STATUS");
+        tableStaffRooms.addColumn("DESCRIPTION");
+        tblStaffRooms.setModel(tableStaffRooms);
+
         btnLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,23 +121,68 @@ public class StaffWindow {
 
     private void createUIComponents() {
         tblStaffDashboard = new JTable();
-        JTableHeader hdrAdminDashboard = tblStaffDashboard.getTableHeader();
-        hdrAdminDashboard.setOpaque(true);
-        hdrAdminDashboard.setDefaultRenderer(new DefaultTableCellRenderer() {
+        JTableHeader hdrStaffDashboard = tblStaffDashboard.getTableHeader();
+        hdrStaffDashboard.setOpaque(true);
+        hdrStaffDashboard.setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                                                            boolean isSelected, boolean hasFocus, int row, int column) {
 
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                c.setBackground(new Color(40, 50, 60));
-                c.setForeground(Color.WHITE);
-                c.setFont(new Font("SansSerif", Font.BOLD, 12));
+                Component StaffDashboard = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                StaffDashboard.setBackground(new Color(40, 50, 60));
+                StaffDashboard.setForeground(Color.WHITE);
+                StaffDashboard.setFont(new Font("SansSerif", Font.BOLD, 12));
                 setHorizontalAlignment(JLabel.CENTER);
-                return c;
+                return StaffDashboard;
             }
         });
-        scrlPnAdminDash = new JScrollPane(tblStaffDashboard);
-        scrlPnAdminDash.getViewport().setBackground(new Color(30, 40, 50));
-        scrlPnAdminDash.setBackground(new Color(30, 40, 50));
+
+        tblStaffRsrv = new JTable();
+        JTableHeader hdrStaffRsrv = tblStaffRsrv.getTableHeader();
+        hdrStaffRsrv.setOpaque(true);
+        hdrStaffRsrv.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component StaffRsrv = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                StaffRsrv.setBackground(new Color(40, 50, 60));
+                StaffRsrv.setForeground(Color.WHITE);
+                StaffRsrv.setFont(new Font("SansSerif", Font.BOLD, 12));
+                setHorizontalAlignment(JLabel.CENTER);
+                return StaffRsrv;
+            }
+        });
+
+        tblStaffRooms = new JTable();
+        JTableHeader hdrAdminRooms = tblStaffRooms.getTableHeader();
+        hdrAdminRooms.setOpaque(true);
+        hdrAdminRooms.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component adminRooms = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                adminRooms.setBackground(new Color(40, 50, 60));
+                adminRooms.setForeground(Color.WHITE);
+                adminRooms.setFont(new Font("SansSerif", Font.BOLD, 12));
+                setHorizontalAlignment(JLabel.CENTER);
+                return adminRooms;
+            }
+        });
+
+        scrlPnStaffDash = new JScrollPane(tblStaffDashboard);
+        scrlPnStaffDash.getViewport().setBackground(new Color(30, 40, 50));
+        scrlPnStaffDash.setBackground(new Color(30, 40, 50));
+
+        scrlPnStaffRsrv = new JScrollPane(tblStaffRsrv);
+        scrlPnStaffRsrv.getViewport().setBackground(new Color(30, 40, 50));
+        scrlPnStaffRsrv.setBackground(new Color(30, 40, 50));
+
+        scrlPnStaffRooms = new JScrollPane(tblStaffRooms);
+        scrlPnStaffRooms.getViewport().setBackground(new Color(30, 40, 50));
+        scrlPnStaffRooms.setBackground(new Color(30, 40, 50));
+
+
     }
 }

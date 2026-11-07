@@ -3,8 +3,12 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class AdminWindow{
     // General Elements
@@ -129,7 +133,6 @@ public class AdminWindow{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-
                     Main mainWindow = new Main();
                     JPanel loginPanel = mainWindow.getMainPanel();
                     JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(btnLogOut);
@@ -143,6 +146,38 @@ public class AdminWindow{
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                }
+            }
+        });
+        tblAdminRsrv.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+
+                if (!event.getValueIsAdjusting() && tblAdminRsrv.getSelectedRow() != -1) {
+
+                    int selectedRow = tblAdminRsrv.getSelectedRow();
+
+                    // 2. Extract data from the selected row (column indices start at 0)
+                    Object col1 = tblAdminRsrv.getValueAt(selectedRow, 1);
+                    Object col2 = tblAdminRsrv.getValueAt(selectedRow, 2);
+                    Object col3 = tblAdminRsrv.getValueAt(selectedRow, 3);
+                    Object col4 = tblAdminRsrv.getValueAt(selectedRow, 4);
+                    Object col5 = tblAdminRsrv.getValueAt(selectedRow, 5);
+                    Object col6 = tblAdminRsrv.getValueAt(selectedRow, 6);
+                    Object col7 = tblAdminRsrv.getValueAt(selectedRow, 7);
+                    Object col8 = tblAdminRsrv.getValueAt(selectedRow, 8);
+                    Object col9 = tblAdminRsrv.getValueAt(selectedRow, 9);
+
+                    // 3. Set the text into your JTextFields
+                    txtGuestName.setText(col1 != null ? col1.toString() : "");
+                    txtEmail.setText(col2 != null ? col2.toString() : "");
+                    txtPhone.setText(col3 != null ? col3.toString() : "");
+                    cmbReservationRoom.setSelectedItem(col4 != null ? col4.toString() : "");
+                    cmbCheckIn.setSelectedItem(col5 != null ? col5.toString() : "");
+                    cmbCheckOut.setSelectedItem(col6 != null ? col6.toString() : "");
+                    txtBaseTotal.setText(col3 != null ? col7.toString() : "");
+                    txtExtraCharge.setText(col3 != null ? col8.toString() : "");
+                    txtTotal.setText(col3 != null ? col9.toString() : "");
                 }
             }
         });
