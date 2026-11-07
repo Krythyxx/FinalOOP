@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class GuestWindow {
-    private JPanel adminPanel;
+    private JPanel guestPanel;
     private JLabel lbl;
     private JButton btnLogOut;
     private JTabbedPane tabbedPane1;
@@ -41,4 +41,8 @@ public class GuestWindow {
     private JTable tblAdminRooms;
     private JLabel txtUserName;
     private JTextField txtUserRole;
+
+
+
+    public JPanel getGuestPanel(){return guestPanel;}
 }

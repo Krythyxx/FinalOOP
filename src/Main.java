@@ -5,49 +5,78 @@ import java.awt.event.ActionListener;
 public class Main {
     private JPanel mainPanel;
     private JTextField txtUsername;
-    private JButton btnSignIn;
-    private JButton btnCreateAcc;
-    private JPasswordField txtPassword;
-    String Username,Password;
+    private JButton SIGNINButton;
+    private JButton createAGuestAccountButton;
+    private JPasswordField passwordField1;
+
 
     public Main() {
-
-
-        // SignIn Button
-        btnSignIn.addActionListener(new ActionListener() {
+        SIGNINButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Username = txtUsername.getText();
-                Password = txtPassword.getText();
-                if(Username.equals("admin") && Password.equals("admin123")) {
-                    try {
-                        JFrame accountFrame = new JFrame("Administrator");
-                        AdminWindow admin = new AdminWindow();
-                        JPanel adminPanel = admin.getAdminPanel();
+               try {
+                   String userInput = txtUsername.getText().trim();
+                   if(userInput.equals("admin")){
+                       JFrame adminFrame = new JFrame("Administrator");
+                       AdminWindow admin = new AdminWindow();
+                       JPanel adminPanel = admin.getAdminPanel();
+                       if(adminPanel == null){
+                           JOptionPane.showMessageDialog(null,
+                                   "Error: getAdminPanel() returned null. Check deptForm.java",
+                                   "NULL PANEL ERROR", JOptionPane.ERROR_MESSAGE);
+                       }
+                       adminFrame.setContentPane(adminPanel);
+                       adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                       adminFrame.setSize(1150,750);
+                       adminFrame.setLocationRelativeTo(null);
+                       adminFrame.setVisible(true);
 
-                        if (adminPanel == null) {
-                            JOptionPane.showMessageDialog(null,
-                                    "Error: getAdminPanel() returned null. Check deptForm.java",
-                                    "NULL PANEL ERROR", JOptionPane.ERROR_MESSAGE);
-                        }
+                       JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                       if(currentFrame != null) {
+                           currentFrame.dispose();
+                       }
+                   } else if (userInput.equals("staff")) {
+                       JFrame staffFrame = new JFrame("Staff");
+                       StaffWindow staff = new StaffWindow();
+                       JPanel staffPanel = staff.getStaffPanel();
+                       if(staffPanel == null){
+                           JOptionPane.showMessageDialog(null,
+                                   "Error: getAdminPanel() returned null. Check deptForm.java",
+                                   "NULL PANEL ERROR", JOptionPane.ERROR_MESSAGE);
+                       }
+                       staffFrame.setContentPane(staffPanel);
+                       staffFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                       staffFrame.setSize(1150,750);
+                       staffFrame.setLocationRelativeTo(null);
+                       staffFrame.setVisible(true);
 
-                        accountFrame.setContentPane(adminPanel);
-                        accountFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        accountFrame.setSize(1150, 750);
-                        accountFrame.setLocationRelativeTo(null);
-                        accountFrame.setVisible(true);
-                        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                       JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                       if(currentFrame != null) {
+                           currentFrame.dispose();
+                       }
+                   } else if (userInput.equals("guest")) {
+                       JFrame guestFrame = new JFrame("Staff");
+                       GuestWindow guest = new GuestWindow();
+                       JPanel guestPanel = guest.getGuestPanel();
+                       if(guestPanel == null){
+                           JOptionPane.showMessageDialog(null,
+                                   "Error: getAdminPanel() returned null. Check deptForm.java",
+                                   "NULL PANEL ERROR", JOptionPane.ERROR_MESSAGE);
+                       }
+                       guestFrame.setContentPane(guestPanel);
+                       guestFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                       guestFrame.setLocationRelativeTo(null);
+                       guestFrame.setVisible(true);
 
-                        if (currentFrame != null) {
-                            currentFrame.dispose();
-                        }
+                       JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+                       if(currentFrame != null) {
+                           currentFrame.dispose();
+                       }
+                   } else {
+                       JOptionPane.showMessageDialog(null, "Access Denied: Invalid input.", "Error", JOptionPane.ERROR_MESSAGE);
+                   }
 
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-
-
+               }catch(Exception ex){ex.printStackTrace();}
             }
         });
     }
@@ -65,10 +94,11 @@ public class Main {
             JFrame frame = new JFrame("Hotel and Resort Management System");
             frame.setContentPane(new Main().mainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
+            //frame.pack();
+            frame.setSize(550,750);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
-            frame.setSize(550,750);
+
         });
     }
 }
