@@ -129,6 +129,7 @@ public class AdminWindow{
         tableAdminUsers.addColumn("DATE CREATED");
         tblAdminUsers.setModel(tableAdminUsers);
 
+        //return to Main
         btnLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -149,6 +150,8 @@ public class AdminWindow{
                 }
             }
         });
+
+
         tblAdminRsrv.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -157,7 +160,7 @@ public class AdminWindow{
 
                     int selectedRow = tblAdminRsrv.getSelectedRow();
 
-                    // 2. Extract data from the selected row (column indices start at 0)
+                    //Extract from rows
                     Object col1 = tblAdminRsrv.getValueAt(selectedRow, 1);
                     Object col2 = tblAdminRsrv.getValueAt(selectedRow, 2);
                     Object col3 = tblAdminRsrv.getValueAt(selectedRow, 3);
@@ -168,7 +171,7 @@ public class AdminWindow{
                     Object col8 = tblAdminRsrv.getValueAt(selectedRow, 8);
                     Object col9 = tblAdminRsrv.getValueAt(selectedRow, 9);
 
-                    // 3. Set the text into your JTextFields
+                    //Moves to Text Field
                     txtGuestName.setText(col1 != null ? col1.toString() : "");
                     txtEmail.setText(col2 != null ? col2.toString() : "");
                     txtPhone.setText(col3 != null ? col3.toString() : "");
@@ -182,6 +185,9 @@ public class AdminWindow{
             }
         });
     }
+
+
+    //Table Design
     public JPanel getAdminPanel(){return adminPanel;}
 
     private void createUIComponents() {
@@ -193,7 +199,6 @@ public class AdminWindow{
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                                                            boolean isSelected, boolean hasFocus, int row, int column) {
-
                 Component adminDash = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 adminDash.setBackground(new Color(40, 50, 60));
                 adminDash.setForeground(Color.WHITE);
@@ -219,6 +224,7 @@ public class AdminWindow{
                 return adminRsrv;
             }
         });
+
 
         tblAdminRooms = new JTable();
         JTableHeader hdrAdminRooms = tblAdminRooms.getTableHeader();

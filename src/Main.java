@@ -16,7 +16,9 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                try {
                    String username = txtUsername.getText().trim();
-                   if(username.equals("admin")){
+
+                   //Admin Window
+                   if(username.equals("admin")){ //database
                        JFrame adminFrame = new JFrame("Administrator");
                        AdminWindow admin = new AdminWindow();
                        JPanel adminPanel = admin.getAdminPanel();
@@ -35,7 +37,9 @@ public class Main {
                        if(currentFrame != null) {
                            currentFrame.dispose();
                        }
-                   } else if (username.equals("staff")) {
+
+                       //Staff Window
+                   } else if (username.equals("staff")) { //database
                        JFrame staffFrame = new JFrame("Staff");
                        StaffWindow staff = new StaffWindow();
                        JPanel staffPanel = staff.getStaffPanel();
@@ -54,7 +58,9 @@ public class Main {
                        if(currentFrame != null) {
                            currentFrame.dispose();
                        }
-                   } else if (username.equals("guest")) {
+
+                       //Guest Window
+                   } else if (username.equals("guest")) { //database
                        JFrame guestFrame = new JFrame("Guest");
                        GuestWindow guest = new GuestWindow();
                        JPanel guestPanel = guest.getGuestPanel();
@@ -73,9 +79,8 @@ public class Main {
                        if(currentFrame != null) {
                            currentFrame.dispose();
                        }
-                   } else {
+                   } else
                        JOptionPane.showMessageDialog(null, "Access Denied: Invalid Username or Password input.", "Error", JOptionPane.ERROR_MESSAGE);
-                   }
 
                }catch(Exception ex){ex.printStackTrace();}
             }
