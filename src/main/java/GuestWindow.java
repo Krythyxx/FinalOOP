@@ -1,10 +1,14 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 public class GuestWindow {
     private JPanel guestPanel;
@@ -12,49 +16,41 @@ public class GuestWindow {
     private JButton btnLogOut;
     private JTabbedPane tabbedPane1;
     private JPanel pnlRsrvtn;
-    private JTextField txtCreateRsrv;
+    private JTextField txtGuestName;
     private JTextField txtEmail;
     private JTextField txtPhone;
-    private JComboBox cmbChkIn;
-    private JComboBox cmbChkOut;
-    private JSpinner spnrGuestNum;
-    private JTextField txtSpReq;
+    private JSpinner spnrNumberOfGuest;
+    private JTextField txtSpecialRequest;
     private JTextField txtComments;
     private JTextField txtBaseTotal;
-    private JTextField txtXtraCharge;
-    private JTextField textField14;
-    private JButton addReservationButton;
-    private JButton clearFormButton;
-    private JComboBox cmbRsrvRoom;
-    private JTextField searchByGuestNameTextField;
-    private JComboBox comboBox3;
-    private JButton btnAcceptReq;
-    private JButton btnDeclienReq;
-    private JButton btnChkIn;
-    private JButton btnChkOut;
+    private JTextField txtExtraCharge;
+    private JTextField txtTotal;
+    private JButton btnAddReservation;
+    private JButton btnClearForm;
+    private JComboBox cmbReservationRoom;
+    private JComboBox cmbFilter;
+    private JButton btnAcceptRequest;
+    private JButton btnDeclineRequest;
+    private JButton btnCheckIn;
+    private JButton btnCheckOut;
     private JButton btnCancel;
     private JButton btnDelete;
     private JTable tblGuestRsrv;
-    private JTextField textField16;
-    private JComboBox comboBox4;
-    private JSpinner spinner2;
-    private JComboBox comboBox5;
-    private JButton addRoomButton;
-    private JTextField textField17;
-    private JTextField textField18;
-    private JButton updateSelectedButton;
-    private JButton deleteSelectedButton;
     private JTable tblGuestRooms;
     private JLabel txtUserName;
     private JTextField txtUserRole;
     private JScrollPane scrlPnGuestRsrv;
     private JScrollPane scrlPnGuestRooms;
+    private JTextField txtCheckIn;
+    private JTextField txtCheckOut;
 
+    private TableRowSorter<DefaultTableModel> sorter;
 
     DefaultTableModel tableGuestReservation = new DefaultTableModel();
     DefaultTableModel tableGuestRooms = new DefaultTableModel();
 
     public GuestWindow(){
+        //For Guest Reservation
         tableGuestReservation.addColumn("ID");
         tableGuestReservation.addColumn("GUEST");
         tableGuestReservation.addColumn("EMAIL");
@@ -67,7 +63,30 @@ public class GuestWindow {
         tableGuestReservation.addColumn("TOTAL");
         tableGuestReservation.addColumn("STATUS");
         tblGuestRsrv.setModel(tableGuestReservation);
+        sorter = new TableRowSorter<>(tableGuestReservation);
+        tblGuestRsrv.setRowSorter(sorter);
 
+        // fixing TextField
+        for (JTextField f : new JTextField[]{txtGuestName, txtEmail, txtPhone, txtCheckIn, txtCheckOut,
+                txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge}) {
+            f.setBorder(BorderFactory.createCompoundBorder(
+                    f.getBorder(),
+                    BorderFactory.createEmptyBorder(0, 8, 0, 8)));
+            f.setCaretColor(Color.WHITE);
+        }
+
+        // search bar and admin status buttons are not used by guests
+        btnAcceptRequest.setVisible(false);
+        btnDeclineRequest.setVisible(false);
+        btnCheckIn.setVisible(false);
+        btnCheckOut.setVisible(false);
+        btnCancel.setVisible(false);
+        btnDelete.setVisible(false);
+
+        // status filter
+        cmbFilter.addActionListener(e -> applyFilter());
+
+        //For Guest Rooms
         tableGuestRooms.addColumn("ID");
         tableGuestRooms.addColumn("ROOM NO.");
         tableGuestRooms.addColumn("TYPE");
@@ -77,6 +96,7 @@ public class GuestWindow {
         tableGuestRooms.addColumn("DESCRIPTION");
         tblGuestRooms.setModel(tableGuestRooms);
 
+        //return to Main
         btnLogOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,6 +117,136 @@ public class GuestWindow {
                 }
             }
         });
+
+        //Reservation Button (always saved as Pending)
+        btnAddReservation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object room = cmbReservationRoom.getSelectedItem();
+
+                Reservation rsv = new Reservation(
+                        tableGuestReservation.getRowCount() + 1,
+                        txtGuestName.getText().trim(),
+                        txtEmail.getText().trim(),
+                        txtPhone.getText().trim(),
+                        room == null ? "" : room.toString(),
+                        txtCheckIn.getText().trim(),
+                        txtCheckOut.getText().trim(),
+                        (Integer) spnrNumberOfGuest.getValue(),
+                        txtSpecialRequest.getText(),
+                        txtComments.getText(),
+                        parseMoney(txtBaseTotal),
+                        parseMoney(txtExtraCharge));
+
+                String error = rsv.validate();
+                if (error != null) {
+                    JOptionPane.showMessageDialog(null, error);
+                    return;
+                }
+                String dbError = DbManager.addReservation(rsv, "Pending");
+                if (dbError != null) {
+                    JOptionPane.showMessageDialog(null, dbError);
+                    return;
+                }
+                loadReservations();
+            }
+        });
+
+        //Clear Button
+        btnClearForm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tblGuestRsrv.clearSelection();
+
+                txtGuestName.setText("");
+                txtEmail.setText("");
+                txtPhone.setText("");
+                txtCheckIn.setText("");
+                txtCheckOut.setText("");
+                txtSpecialRequest.setText("");
+                txtComments.setText("");
+                txtBaseTotal.setText("");
+                txtExtraCharge.setText("");
+                txtTotal.setText("");
+
+                spnrNumberOfGuest.setValue(0);
+
+                if (cmbReservationRoom.getItemCount() > 0) {
+                    cmbReservationRoom.setSelectedIndex(0);
+                }
+            }
+        });
+
+        tblGuestRsrv.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+
+                if (!event.getValueIsAdjusting() && tblGuestRsrv.getSelectedRow() != -1) {
+
+                    int selectedRow = tblGuestRsrv.getSelectedRow();
+
+                    //Extract from rows
+                    Object col1 = tblGuestRsrv.getValueAt(selectedRow, 1);
+                    Object col2 = tblGuestRsrv.getValueAt(selectedRow, 2);
+                    Object col3 = tblGuestRsrv.getValueAt(selectedRow, 3);
+                    Object col4 = tblGuestRsrv.getValueAt(selectedRow, 4);
+                    Object col5 = tblGuestRsrv.getValueAt(selectedRow, 5);
+                    Object col6 = tblGuestRsrv.getValueAt(selectedRow, 6);
+                    Object col7 = tblGuestRsrv.getValueAt(selectedRow, 7);
+                    Object col8 = tblGuestRsrv.getValueAt(selectedRow, 8);
+                    Object col9 = tblGuestRsrv.getValueAt(selectedRow, 9);
+
+                    //Moves to Text Field
+                    txtGuestName.setText(col1 != null ? col1.toString() : "");
+                    txtEmail.setText(col2 != null ? col2.toString() : "");
+                    txtPhone.setText(col3 != null ? col3.toString() : "");
+                    cmbReservationRoom.setSelectedItem(col4 != null ? col4.toString() : "");
+                    txtCheckIn.setText(col5 != null ? col5.toString() : "");
+                    txtCheckOut.setText(col6 != null ? col6.toString() : "");
+                    txtBaseTotal.setText(col7 != null ? col7.toString() : "");
+                    txtExtraCharge.setText(col8 != null ? col8.toString() : "");
+                    txtTotal.setText(col9 != null ? col9.toString() : "");
+                }
+            }
+        });
+
+        spnrNumberOfGuest.setModel(new SpinnerNumberModel(0, 0, 30, 1));
+
+        loadRooms();
+        loadReservations();
+    }
+
+    // Filter table by status
+    private void applyFilter() {
+        if (cmbFilter.getSelectedIndex() > 0) {
+            String status = cmbFilter.getSelectedItem().toString();
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)^" + Pattern.quote(status) + "$", 10));
+        } else {
+            sorter.setRowFilter(null);
+        }
+    }
+
+    //convert string to double
+    private double parseMoney(JTextField f) {
+        try {
+            return Double.parseDouble(f.getText().trim());
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+    }
+
+    //Adds Db Table row
+    private void loadRooms() {
+        tableGuestRooms.setRowCount(0);
+        for (Object[] row : DbManager.getAllRooms()) tableGuestRooms.addRow(row);
+
+        cmbReservationRoom.removeAllItems();
+        for (String n : DbManager.getRoomNumbers()) cmbReservationRoom.addItem(n);
+    }
+
+    private void loadReservations() {
+        tableGuestReservation.setRowCount(0);
+        for (Object[] row : DbManager.getAllReservations()) tableGuestReservation.addRow(row);
     }
 
     public JPanel getGuestPanel(){return guestPanel;}
