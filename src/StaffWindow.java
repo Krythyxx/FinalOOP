@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class StaffWindow {
     private JPanel staffPanel;
-    private JLabel lbl;
+    private JLabel lblAppName;
     private JButton btnLogOut;
     private JTabbedPane tbdPnStaff;
     private JTextField txtAvailableRooms;
