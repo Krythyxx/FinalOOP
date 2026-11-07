@@ -317,6 +317,50 @@ public class DbManager {
         }
     }
 
+
+    //Login check
+    public static String authenticate(String username, String password) {
+        String sql = "SELECT role FROM users WHERE username = ? AND password = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            return rs.next() ? rs.getString(1) : null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //limits guest guest name as their username
+    public static List<Object[]> getReservationsByGuest(String username) {
+        List<Object[]> rows = new ArrayList<>();
+        String sql = """
+                SELECT r.id, r.guest_name, r.guest_email, r.guest_phone, rm.room_number,
+                       r.check_in, r.check_out, r.base_amount, r.extra_charge,
+                       r.total_amount, r.status
+                FROM reservations r JOIN rooms rm ON r.room_id = rm.id
+                WHERE r.guest_name = ?
+                ORDER BY r.id DESC""";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                rows.add(new Object[]{
+                        rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5),
+                        LocalDate.parse(rs.getString(6)).format(Reservation.DATE_FMT),
+                        LocalDate.parse(rs.getString(7)).format(Reservation.DATE_FMT),
+                        rs.getDouble(8), rs.getDouble(9), rs.getDouble(10), rs.getString(11)});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rows;
+    }
+
     public static String deleteReservation(int id) {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement("DELETE FROM reservations WHERE id = ?")) {

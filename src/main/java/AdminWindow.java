@@ -133,6 +133,7 @@ public class AdminWindow{
             f.setCaretColor(Color.WHITE);
         }
 
+
         txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e)  { applyFilter(); }
             public void removeUpdate(DocumentEvent e)  { applyFilter(); }
@@ -152,6 +153,7 @@ public class AdminWindow{
             }
         });
 
+        //table builder
         tableAdminRooms.addColumn("ID");
         tableAdminRooms.addColumn("ROOM NO.");
         tableAdminRooms.addColumn("TYPE");
@@ -308,6 +310,7 @@ public class AdminWindow{
         loadRooms();
         loadReservations();
 
+        //add user
         btnAddUser.addActionListener(e -> {
             String role = rbAdmin.isSelected() ? "admin" : rbStaff.isSelected() ? "staff" : "guest";
             String error = DbManager.addUser(txtFullName.getText().trim(), txtUsername.getText().trim(),
@@ -317,6 +320,7 @@ public class AdminWindow{
             loadUsers();
         });
 
+        //delete user
         btnDeleteUser.addActionListener(e -> {
             int id = selectedId(tblAdminUsers);
             if (id == -1) return;
@@ -343,6 +347,7 @@ public class AdminWindow{
             }
         });
 
+        //delete room
         btnDeleteSelected.addActionListener(e -> {
             int id = selectedId(tblAdminRooms);
             if (id == -1) return;
@@ -425,7 +430,7 @@ public class AdminWindow{
         for (Object[] row : DbManager.getAllReservations()) tableAdminReservation.addRow(row);
     }
 
-    //Returns the ID of the selected row, or -1 if nothing is selected
+    //Returns the ID of the selected row
     private int selectedId(JTable table) {
         int row = table.getSelectedRow();
         if (row == -1) {

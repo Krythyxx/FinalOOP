@@ -136,6 +136,8 @@
                             </constraints>
                             <properties>
                               <background color="-14668222"/>
+                              <editable value="false"/>
+                              <enabled value="false"/>
                               <foreground color="-922881"/>
                             </properties>
                           </component>
@@ -253,6 +255,7 @@
                             <properties>
                               <background color="-14668222"/>
                               <editable value="false"/>
+                              <enabled value="false"/>
                             </properties>
                           </component>
                           <component id="9334a" class="javax.swing.JLabel">
@@ -273,7 +276,7 @@
                             <properties>
                               <background color="-14668222"/>
                               <editable value="false"/>
-                              <enabled value="true"/>
+                              <enabled value="false"/>
                             </properties>
                           </component>
                           <component id="ae60" class="javax.swing.JLabel">
@@ -295,6 +298,7 @@
                             <properties>
                               <background color="-11969390"/>
                               <editable value="false"/>
+                              <enabled value="false"/>
                             </properties>
                           </component>
                           <component id="d139d" class="javax.swing.JButton" binding="btnAddReservation">
@@ -380,72 +384,6 @@
                           </component>
                         </children>
                       </grid>
-                      <component id="b242e" class="javax.swing.JButton" binding="btnAcceptRequest">
-                        <constraints>
-                          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-13911741"/>
-                          <font name="Segoe UI Black" size="14"/>
-                          <foreground color="-15787741"/>
-                          <text value="Accept Request"/>
-                        </properties>
-                      </component>
-                      <component id="a85d4" class="javax.swing.JButton" binding="btnDeclineRequest">
-                        <constraints>
-                          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-4579304"/>
-                          <font name="Segoe UI Black" size="14"/>
-                          <foreground color="-922881"/>
-                          <text value="Decline Request"/>
-                        </properties>
-                      </component>
-                      <component id="5c183" class="javax.swing.JButton" binding="btnCheckIn">
-                        <constraints>
-                          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-9797956"/>
-                          <font name="Segoe UI Black" size="14"/>
-                          <foreground color="-15787741"/>
-                          <text value="Check-In"/>
-                        </properties>
-                      </component>
-                      <component id="7567f" class="javax.swing.JButton" binding="btnCheckOut">
-                        <constraints>
-                          <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-14668222"/>
-                          <font name="Segoe UI Black" size="14"/>
-                          <foreground color="-922881"/>
-                          <text value="Check-Out"/>
-                        </properties>
-                      </component>
-                      <component id="256cc" class="javax.swing.JButton" binding="btnCancel">
-                        <constraints>
-                          <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-4579304"/>
-                          <font name="Segoe UI Black" size="14"/>
-                          <foreground color="-922881"/>
-                          <text value="Cancel"/>
-                        </properties>
-                      </component>
-                      <component id="782fe" class="javax.swing.JButton" binding="btnDelete">
-                        <constraints>
-                          <grid row="4" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-4579304"/>
-                          <font name="Segoe UI Black" size="14"/>
-                          <foreground color="-922881"/>
-                          <text value="Delete"/>
-                        </properties>
-                      </component>
                       <scrollpane id="a449f" binding="scrlPnGuestRsrv" custom-create="true">
                         <constraints>
                           <grid row="5" column="1" row-span="1" col-span="8" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>

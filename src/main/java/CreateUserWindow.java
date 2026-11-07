@@ -4,14 +4,49 @@ import java.awt.event.ActionListener;
 
 public class CreateUserWindow {
     private JPanel createAccountPanel;
-    private JTextField textField1;
-    private JButton CREATEACCOUNTButton;
-    private JPasswordField passwordField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField txtUserName;
+    private JButton btnCreateAccount;
+    private JPasswordField txtPassword;
+    private JTextField txtName;
+    private JTextField txtConfirm;
     private JButton btnBackToLogin;
 
     public CreateUserWindow() {
+
+        btnCreateAccount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fullName = txtName.getText().trim();
+                String username = txtUserName.getText().trim();
+                String password = new String(txtPassword.getPassword());
+                String confirm  = txtConfirm.getText();
+
+                if (username.isEmpty() || password.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Username and password are required.");
+                    return;
+                }
+                if (!password.equals(confirm)) {
+                    JOptionPane.showMessageDialog(null, "Passwords do not match.");
+                    return;
+                }
+
+                //guest role
+                String error = DbManager.addUser(fullName, username, password, "guest");
+                if (error != null) {
+                    JOptionPane.showMessageDialog(null, error);
+                    return;
+                }
+
+                // go back to the login screen after account creation
+                JOptionPane.showMessageDialog(null, "Account created! You can now log in.");
+                txtName.setText("");
+                txtUserName.setText("");
+                txtPassword.setText("");
+                txtConfirm.setText("");
+                btnBackToLogin.doClick();
+            }
+        });
+
         btnBackToLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -273,7 +273,7 @@ public class StaffWindow {
             }
         });
 
-        //Database (runs here, not in createUIComponents, because the form components don't exist yet there)
+        //Database
         spnrNumberOfGuest.setModel(new SpinnerNumberModel(0, 0, 30, 1));
 
         loadRooms();
@@ -343,7 +343,7 @@ public class StaffWindow {
         for (Object[] row : DbManager.getAllReservations()) tableStaffReservation.addRow(row);
     }
 
-    //Returns the ID of the selected row, or -1 if nothing is selected
+    //Returns the ID of the selected row
     private int selectedId(JTable table) {
         int row = table.getSelectedRow();
         if (row == -1) {
