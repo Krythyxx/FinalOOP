@@ -1,6 +1,5 @@
-package main.java;
-
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,6 +13,14 @@ public class Main {
 
 
     public Main() {
+
+        for (JTextField f : new JTextField[]{txtUsername, txtPassword}) {
+            f.setBorder(BorderFactory.createCompoundBorder(
+                    f.getBorder(),
+                    BorderFactory.createEmptyBorder(0, 8, 0, 8)));
+            f.setCaretColor(Color.WHITE);
+        }
+
        btnSignIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

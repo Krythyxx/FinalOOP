@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main.java.AdminWindow">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AdminWindow">
   <grid id="27dc6" binding="adminPanel" layout-manager="GridLayoutManager" row-count="2" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
@@ -375,7 +375,9 @@
                     </constraints>
                     <properties>
                       <background color="-14668222"/>
+                      <enabled value="true"/>
                       <foreground color="-922881"/>
+                      <text value=""/>
                     </properties>
                   </component>
                   <component id="27315" class="javax.swing.JTextField" binding="txtPhone">
@@ -500,6 +502,8 @@
                     </constraints>
                     <properties>
                       <background color="-14668222"/>
+                      <editable value="false"/>
+                      <enabled value="true"/>
                     </properties>
                   </component>
                   <component id="1dd13" class="javax.swing.JLabel">
@@ -520,7 +524,7 @@
                     <properties>
                       <background color="-14668222"/>
                       <editable value="false"/>
-                      <enabled value="false"/>
+                      <enabled value="true"/>
                     </properties>
                   </component>
                   <component id="c2712" class="javax.swing.JLabel">

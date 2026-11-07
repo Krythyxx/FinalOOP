@@ -1,5 +1,3 @@
-package main.java;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -126,6 +124,15 @@ public class AdminWindow{
         sorter = new TableRowSorter<>(tableAdminReservation);
         tblAdminRsrv.setRowSorter(sorter);
 
+        // fixing TextField
+        for (JTextField f : new JTextField[]{txtGuestName, txtEmail, txtPhone, txtCheckIn, txtCheckOut,
+                txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtSearch}) {
+            f.setBorder(BorderFactory.createCompoundBorder(
+                    f.getBorder(),
+                    BorderFactory.createEmptyBorder(0, 8, 0, 8)));
+            f.setCaretColor(Color.WHITE);
+        }
+
         txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e)  { applyFilter(); }
             public void removeUpdate(DocumentEvent e)  { applyFilter(); }
@@ -209,7 +216,7 @@ public class AdminWindow{
                     JOptionPane.showMessageDialog(null, error);
                     return;
                 }
-                String dbError = DbManager.addReservation(rsv, "Confirmed");
+                String dbError = DbManager.addReservation(rsv, "Pending");
                 if (dbError != null) {
                     JOptionPane.showMessageDialog(null, dbError);
                     return;
@@ -246,22 +253,18 @@ public class AdminWindow{
         //status buttons
         btnAcceptRequest.addActionListener(e -> changeStatus("Confirmed", "Pending"));
         btnDeclineRequest.addActionListener(e -> changeStatus("Declined", "Pending"));
-        btnCheckIn.addActionListener(e -> changeStatus("Checked in", "Confirmed"));
-        btnCheckOut.addActionListener(e -> changeStatus("Checked Out", "Checked in"));
+        btnCheckIn.addActionListener(e -> changeStatus("Checked In", "Confirmed"));
+        btnCheckOut.addActionListener(e -> changeStatus("Checked Out", "Checked In"));
         btnCancel.addActionListener(e -> changeStatus("Cancelled", "Pending", "Confirmed"));
         btnDelete.addActionListener(e -> {
-            int viewRow = tblAdminRsrv.getSelectedRow();
-            if (viewRow == -1) {
-                JOptionPane.showMessageDialog(null, "Select a reservation first.");
-                return;
-            }
-            int confirm = JOptionPane.showConfirmDialog(null,
-                    "Delete this reservation?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                int modelRow = tblAdminRsrv.convertRowIndexToModel(viewRow);
-                tableAdminReservation.removeRow(modelRow);
-                btnClearForm.doClick();
-            }
+            int id = selectedId(tblAdminRsrv);
+            if (id == -1) return;
+            if (JOptionPane.showConfirmDialog(null, "Delete this reservation permanently?", "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            String error = DbManager.deleteReservation(id);
+            if (error != null) JOptionPane.showMessageDialog(null, error);
+            loadReservations();
+            btnClearForm.doClick();
         });
 
 
@@ -298,22 +301,76 @@ public class AdminWindow{
             }
         });
 
+        spnrNumberOfGuest.setModel(new SpinnerNumberModel(0, 0, 30, 1));
+        spnrMaxCapacity.setModel(new SpinnerNumberModel(2, 1, 20, 1));
+
+        loadUsers();
+        loadRooms();
+        loadReservations();
+
+        btnAddUser.addActionListener(e -> {
+            String role = rbAdmin.isSelected() ? "admin" : rbStaff.isSelected() ? "staff" : "guest";
+            String error = DbManager.addUser(txtFullName.getText().trim(), txtUsername.getText().trim(),
+                    txtPassword.getText().trim(), role);
+            if (error != null) { JOptionPane.showMessageDialog(null, error); return; }
+            txtFullName.setText(""); txtUsername.setText(""); txtPassword.setText("");
+            loadUsers();
+        });
+
+        btnDeleteUser.addActionListener(e -> {
+            int id = selectedId(tblAdminUsers);
+            if (id == -1) return;
+            if (JOptionPane.showConfirmDialog(null, "Delete this user?", "Confirm",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            String error = DbManager.deleteUser(id);
+            if (error != null) JOptionPane.showMessageDialog(null, error);
+            loadUsers();
+        });
+
+        //Rooms
+        btnAddRoom.addActionListener(e -> {
+            try {
+                double price = Double.parseDouble(txtPrice.getText().trim());
+                String error = DbManager.addRoom(txtRoomNumber.getText().trim(),
+                        cmbRoomType.getSelectedItem().toString(), price,
+                        (Integer) spnrMaxCapacity.getValue(),
+                        cmbStatus.getSelectedItem().toString(), txtDescription.getText().trim());
+                if (error != null) { JOptionPane.showMessageDialog(null, error); return; }
+                txtRoomNumber.setText(""); txtPrice.setText(""); txtDescription.setText("");
+                loadRooms();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Price must be a number.");
+            }
+        });
+
+        btnDeleteSelected.addActionListener(e -> {
+            int id = selectedId(tblAdminRooms);
+            if (id == -1) return;
+            if (JOptionPane.showConfirmDialog(null, "Delete this room?", "Confirm",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            String error = DbManager.deleteRoom(id);
+            if (error != null) JOptionPane.showMessageDialog(null, error);
+            loadRooms();
+        });
+
     }
 
-    // handles statuses to make sense
+    // handles statuses to make sense, and saves the new status to the database
     private void changeStatus(String newStatus, String... allowedFrom) {
-        int viewRow = tblAdminRsrv.getSelectedRow();
-        if (viewRow == -1) {
-            JOptionPane.showMessageDialog(null, "Select a reservation first.");
-            return;
-        }
+        int id = selectedId(tblAdminRsrv);
+        if (id == -1) return;
 
-        int modelRow = tblAdminRsrv.convertRowIndexToModel(viewRow);
+        int modelRow = tblAdminRsrv.convertRowIndexToModel(tblAdminRsrv.getSelectedRow());
         String current = String.valueOf(tableAdminReservation.getValueAt(modelRow, 10));
 
         for (String allowed : allowedFrom) {
             if (allowed.equalsIgnoreCase(current)) {
-                tableAdminReservation.setValueAt(newStatus, modelRow, 10);
+                String error = DbManager.updateReservationStatus(id, newStatus);
+                if (error != null) {
+                    JOptionPane.showMessageDialog(null, error);
+                    return;
+                }
+                loadReservations();
                 return;
             }
         }
@@ -450,73 +507,6 @@ public class AdminWindow{
                 setHorizontalAlignment(JLabel.CENTER);
                 return adminUsers;
             }
-        });
-
-        spnrNumberOfGuest.setModel(new SpinnerNumberModel(1, 1, 30, 1));
-        spnrMaxCapacity.setModel(new SpinnerNumberModel(2, 1, 20, 1));
-
-        loadUsers();
-        loadRooms();
-        loadReservations();
-
-        //Users
-
-        btnAddUser.addActionListener(e -> {
-            String role = rbAdmin.isSelected() ? "admin" : rbStaff.isSelected() ? "staff" : "guest";
-            String error = DbManager.addUser(txtFullName.getText().trim(), txtUsername.getText().trim(),
-                    txtPassword.getText().trim(), role);
-            if (error != null) { JOptionPane.showMessageDialog(null, error); return; }
-            txtFullName.setText(""); txtUsername.setText(""); txtPassword.setText("");
-            loadUsers();
-        });
-
-        btnDeleteUser.addActionListener(e -> {
-            int id = selectedId(tblAdminUsers);
-            if (id == -1) return;
-            if (JOptionPane.showConfirmDialog(null, "Delete this user?", "Confirm",
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
-            String error = DbManager.deleteUser(id);
-            if (error != null) JOptionPane.showMessageDialog(null, error);
-            loadUsers();
-        });
-
-        //Rooms
-
-        btnAddRoom.addActionListener(e -> {
-            try {
-                double price = Double.parseDouble(txtPrice.getText().trim());
-                String error = DbManager.addRoom(txtRoomNumber.getText().trim(),
-                        cmbRoomType.getSelectedItem().toString(), price,
-                        (Integer) spnrMaxCapacity.getValue(),
-                        cmbStatus.getSelectedItem().toString(), txtDescription.getText().trim());
-                if (error != null) { JOptionPane.showMessageDialog(null, error); return; }
-                txtRoomNumber.setText(""); txtPrice.setText(""); txtDescription.setText("");
-                loadRooms();
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Price must be a number.");
-            }
-        });
-
-        btnDeleteSelected.addActionListener(e -> {
-            int id = selectedId(tblAdminRooms);
-            if (id == -1) return;
-            if (JOptionPane.showConfirmDialog(null, "Delete this room?", "Confirm",
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
-            String error = DbManager.deleteRoom(id);
-            if (error != null) JOptionPane.showMessageDialog(null, error);
-            loadRooms();
-        });
-
-        //Reservations
-
-        btnDelete.addActionListener(e -> {
-            int id = selectedId(tblAdminRsrv);
-            if (id == -1) return;
-            if (JOptionPane.showConfirmDialog(null, "Delete this reservation permanently?", "Confirm",
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
-            String error = DbManager.deleteReservation(id);
-            if (error != null) JOptionPane.showMessageDialog(null, error);
-            loadReservations();
         });
 
         scrlPnAdminDash = new JScrollPane(tblAdminDashboard);

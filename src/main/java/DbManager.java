@@ -1,5 +1,3 @@
-package main.java;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -303,6 +301,18 @@ public class DbManager {
             }
             return null;
         } catch (Exception e) {
+            return "Database error: " + e.getMessage();
+        }
+    }
+
+    public static String updateReservationStatus(int id, String status) {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement("UPDATE reservations SET status = ? WHERE id = ?")) {
+            ps.setString(1, status);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            return null;
+        } catch (SQLException e) {
             return "Database error: " + e.getMessage();
         }
     }
