@@ -209,7 +209,12 @@ public class AdminWindow{
                     JOptionPane.showMessageDialog(null, error);
                     return;
                 }
-                tableAdminReservation.addRow(rsv.toRow());
+                String dbError = DbManager.addReservation(rsv, "Confirmed");
+                if (dbError != null) {
+                    JOptionPane.showMessageDialog(null, dbError);
+                    return;
+                }
+                loadReservations();
             }
         });
 
@@ -344,6 +349,35 @@ public class AdminWindow{
         }
     }
 
+    //Adds Db Table row
+    private void loadUsers() {
+        tableAdminUsers.setRowCount(0);
+        for (Object[] row : DbManager.getAllUsers()) tableAdminUsers.addRow(row);
+    }
+
+    private void loadRooms() {
+        tableAdminRooms.setRowCount(0);
+        for (Object[] row : DbManager.getAllRooms()) tableAdminRooms.addRow(row);
+
+        cmbReservationRoom.removeAllItems();
+        for (String n : DbManager.getRoomNumbers()) cmbReservationRoom.addItem(n);
+    }
+
+    private void loadReservations() {
+        tableAdminReservation.setRowCount(0);
+        for (Object[] row : DbManager.getAllReservations()) tableAdminReservation.addRow(row);
+    }
+
+    //Returns the ID of the selected row, or -1 if nothing is selected
+    private int selectedId(JTable table) {
+        int row = table.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a row first.");
+            return -1;
+        }
+        return (int) table.getValueAt(row, 0);
+    }
+
     //Table Design
     public JPanel getAdminPanel(){return adminPanel;}
 
@@ -416,6 +450,73 @@ public class AdminWindow{
                 setHorizontalAlignment(JLabel.CENTER);
                 return adminUsers;
             }
+        });
+
+        spnrNumberOfGuest.setModel(new SpinnerNumberModel(1, 1, 30, 1));
+        spnrMaxCapacity.setModel(new SpinnerNumberModel(2, 1, 20, 1));
+
+        loadUsers();
+        loadRooms();
+        loadReservations();
+
+        //Users
+
+        btnAddUser.addActionListener(e -> {
+            String role = rbAdmin.isSelected() ? "admin" : rbStaff.isSelected() ? "staff" : "guest";
+            String error = DbManager.addUser(txtFullName.getText().trim(), txtUsername.getText().trim(),
+                    txtPassword.getText().trim(), role);
+            if (error != null) { JOptionPane.showMessageDialog(null, error); return; }
+            txtFullName.setText(""); txtUsername.setText(""); txtPassword.setText("");
+            loadUsers();
+        });
+
+        btnDeleteUser.addActionListener(e -> {
+            int id = selectedId(tblAdminUsers);
+            if (id == -1) return;
+            if (JOptionPane.showConfirmDialog(null, "Delete this user?", "Confirm",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            String error = DbManager.deleteUser(id);
+            if (error != null) JOptionPane.showMessageDialog(null, error);
+            loadUsers();
+        });
+
+        //Rooms
+
+        btnAddRoom.addActionListener(e -> {
+            try {
+                double price = Double.parseDouble(txtPrice.getText().trim());
+                String error = DbManager.addRoom(txtRoomNumber.getText().trim(),
+                        cmbRoomType.getSelectedItem().toString(), price,
+                        (Integer) spnrMaxCapacity.getValue(),
+                        cmbStatus.getSelectedItem().toString(), txtDescription.getText().trim());
+                if (error != null) { JOptionPane.showMessageDialog(null, error); return; }
+                txtRoomNumber.setText(""); txtPrice.setText(""); txtDescription.setText("");
+                loadRooms();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Price must be a number.");
+            }
+        });
+
+        btnDeleteSelected.addActionListener(e -> {
+            int id = selectedId(tblAdminRooms);
+            if (id == -1) return;
+            if (JOptionPane.showConfirmDialog(null, "Delete this room?", "Confirm",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            String error = DbManager.deleteRoom(id);
+            if (error != null) JOptionPane.showMessageDialog(null, error);
+            loadRooms();
+        });
+
+        //Reservations
+
+        btnDelete.addActionListener(e -> {
+            int id = selectedId(tblAdminRsrv);
+            if (id == -1) return;
+            if (JOptionPane.showConfirmDialog(null, "Delete this reservation permanently?", "Confirm",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            String error = DbManager.deleteReservation(id);
+            if (error != null) JOptionPane.showMessageDialog(null, error);
+            loadReservations();
         });
 
         scrlPnAdminDash = new JScrollPane(tblAdminDashboard);

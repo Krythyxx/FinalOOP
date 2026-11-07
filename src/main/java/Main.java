@@ -122,6 +122,7 @@ public class Main {
 
     //Main Method
     public static void main(String[] args){
+        DbManager.init();
         SwingUtilities.invokeLater(()->{
             JFrame frame = new JFrame("Hotel and Resort Management System");
             frame.setContentPane(new Main().mainPanel);

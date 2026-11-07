@@ -1,6 +1,7 @@
 package main.java;
 
 import java.sql.*;
+import java.util.Arrays;
 
 public class DBTest {
     public static void main(String[] args) {
@@ -23,5 +24,18 @@ public class DBTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        // add a user: prints null if it worked
+        System.out.println(DbManager.addUser("Test Guest", "testguest", "pass123", "guest"));
+
+// add the same username again: should print "Username already exists."
+        System.out.println(DbManager.addUser("Test Guest", "testguest", "pass123", "guest"));
+
+// show every user
+        for (Object[] row : DbManager.getAllUsers()) {
+            System.out.println(Arrays.toString(row));
+        }
+
+// try deleting the admin: should print "The admin account cannot be deleted."
+        System.out.println(DbManager.deleteUser(1));
     }
 }
