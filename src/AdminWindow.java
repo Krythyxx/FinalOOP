@@ -50,6 +50,8 @@ public class AdminWindow{
     private JButton btnCancel;
     private JButton btnDelete;
     private JTable tblAdminRsrv;
+    private JTextField txtCheckIn;
+    private JTextField txtCheckOut;
 
     //For Admin Rooms Tab
     private JTable tblAdminRooms;
@@ -80,11 +82,13 @@ public class AdminWindow{
     private JScrollPane scrlPnAdminUsers;
     private JPanel tbdPanAdmin;
 
+
     DefaultTableModel tableAdminDashboard = new DefaultTableModel();
     DefaultTableModel tableAdminReservation = new DefaultTableModel();
     DefaultTableModel tableAdminRooms = new DefaultTableModel();
     DefaultTableModel tableAdminUsers = new DefaultTableModel();
     int count = 0,xrow = 0;
+
 
     public AdminWindow(){
 
@@ -184,6 +188,16 @@ public class AdminWindow{
                 }
             }
         });
+
+        btnAddReservation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //check reservation.java
+
+            }
+        });
+
+
     }
 
 

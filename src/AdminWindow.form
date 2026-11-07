@@ -404,7 +404,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-9797956"/>
-                      <text value="Check-in"/>
+                      <text value="Check-in (MM-DD-YYYY)"/>
                     </properties>
                   </component>
                   <component id="a8e17" class="javax.swing.JLabel">
@@ -413,25 +413,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-9797956"/>
-                      <text value="Check-out"/>
-                    </properties>
-                  </component>
-                  <component id="b8c15" class="javax.swing.JComboBox" binding="cmbCheckIn">
-                    <constraints>
-                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <background color="-14668222"/>
-                      <foreground color="-922881"/>
-                    </properties>
-                  </component>
-                  <component id="e0751" class="javax.swing.JComboBox" binding="cmbCheckOut">
-                    <constraints>
-                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <background color="-14668222"/>
-                      <foreground color="-922881"/>
+                      <text value="Check-out (MM-DD-YYYY)"/>
                     </properties>
                   </component>
                   <component id="fb426" class="javax.swing.JLabel">
@@ -591,6 +573,7 @@
                     <properties>
                       <background color="-14668222"/>
                       <foreground color="-922881"/>
+                      <model/>
                     </properties>
                   </component>
                   <component id="eb6e8" class="javax.swing.JLabel">
@@ -609,6 +592,28 @@
                     <properties>
                       <foreground color="-9797956"/>
                       <text value="Guest Name"/>
+                    </properties>
+                  </component>
+                  <component id="e227a" class="javax.swing.JTextField" binding="txtCheckIn">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-14668222"/>
+                      <foreground color="-922881"/>
+                    </properties>
+                  </component>
+                  <component id="cd2aa" class="javax.swing.JTextField" binding="txtCheckOut">
+                    <constraints>
+                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-14668222"/>
+                      <foreground color="-922881"/>
                     </properties>
                   </component>
                 </children>
