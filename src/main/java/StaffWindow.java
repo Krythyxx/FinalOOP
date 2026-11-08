@@ -23,9 +23,9 @@ public class StaffWindow extends BaseWindow {
     private JSpinner spnrNumberOfGuest;
     private JTextField txtSpecialRequest;
     private JTextField txtComments;
-    private JTextField txtBaseTotal;
-    private JTextField txtExtraCharge;
-    private JTextField txtTotal;
+    private JTextArea txtBaseTotal;
+    private JTextArea txtExtraCharge;
+    private JTextArea txtTotal;
     private JButton btnAddReservation;
     private JButton btnClearForm;
     private JComboBox cmbReservationRoom;
@@ -73,7 +73,7 @@ public class StaffWindow extends BaseWindow {
 
         // fixing TextField
         styleFields(txtGuestName, txtEmail, txtPhone, txtCheckIn, txtCheckOut,
-                txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtSearch);
+                txtSpecialRequest, txtComments/*, txtBaseTotal, txtExtraCharge*/, txtSearch);
 
         //search and filter
         txtSearch.getDocument().addDocumentListener(new DocumentListener() {
@@ -104,9 +104,9 @@ public class StaffWindow extends BaseWindow {
                     txtCheckOut.getText().trim(),
                     (Integer) spnrNumberOfGuest.getValue(),
                     txtSpecialRequest.getText(),
-                    txtComments.getText(),
+                    txtComments.getText()/*,
                     parseMoney(txtBaseTotal),
-                    parseMoney(txtExtraCharge));
+                    parseMoney(txtExtraCharge)*/);
 
             saveReservation(rsv, "Pending");
         });

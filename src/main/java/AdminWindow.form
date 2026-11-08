@@ -494,7 +494,7 @@
                       <text value="Base Total:  "/>
                     </properties>
                   </component>
-                  <component id="fd479" class="javax.swing.JTextField" binding="txtBaseTotal">
+                  <component id="92be5" class="javax.swing.JTextArea" binding="txtBaseTotal">
                     <constraints>
                       <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -504,6 +504,7 @@
                       <background color="-14668222"/>
                       <editable value="false"/>
                       <enabled value="true"/>
+                      <foreground color="-922881"/>
                     </properties>
                   </component>
                   <component id="1dd13" class="javax.swing.JLabel">
@@ -515,7 +516,7 @@
                       <text value="Extra Guest Charge(200 per guest over Max Capacity):  "/>
                     </properties>
                   </component>
-                  <component id="a6ce7" class="javax.swing.JTextField" binding="txtExtraCharge">
+                  <component id="1022e" class="javax.swing.JTextArea" binding="txtExtraCharge">
                     <constraints>
                       <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -525,6 +526,7 @@
                       <background color="-14668222"/>
                       <editable value="false"/>
                       <enabled value="true"/>
+                      <foreground color="-922881"/>
                     </properties>
                   </component>
                   <component id="c2712" class="javax.swing.JLabel">
@@ -537,7 +539,7 @@
                       <text value="Total:  "/>
                     </properties>
                   </component>
-                  <component id="9d6de" class="javax.swing.JTextField" binding="txtTotal">
+                  <component id="8a750" class="javax.swing.JTextArea" binding="txtTotal">
                     <constraints>
                       <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>

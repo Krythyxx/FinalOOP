@@ -14,9 +14,9 @@ public class GuestWindow extends BaseWindow {
     private JSpinner spnrNumberOfGuest;
     private JTextField txtSpecialRequest;
     private JTextField txtComments;
-    private JTextField txtBaseTotal;
-    private JTextField txtExtraCharge;
-    private JTextField txtTotal;
+    private JTextArea txtBaseTotal;
+    private JTextArea txtExtraCharge;
+    private JTextArea txtTotal;
     private JButton btnAddReservation;
     private JButton btnClearForm;
     private JComboBox cmbReservationRoom;
@@ -45,8 +45,8 @@ public class GuestWindow extends BaseWindow {
         tblGuestRsrv.setRowSorter(sorter);
 
         // fixing TextField
-        styleFields(txtGuestName, txtEmail, txtPhone, txtCheckIn, txtCheckOut,
-                txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge);
+        styleFields(txtGuestName, txtEmail, txtPhone, txtCheckIn, txtCheckOut/*,
+                txtSpecialRequest, txtComments*/);
 
         // guest name is always the logged-in username and can't be edited
         txtGuestName.setText(getUsername());
@@ -83,9 +83,9 @@ public class GuestWindow extends BaseWindow {
                     txtCheckOut.getText().trim(),
                     (Integer) spnrNumberOfGuest.getValue(),
                     txtSpecialRequest.getText(),
-                    txtComments.getText(),
+                    txtComments.getText()/*,
                     parseMoney(txtBaseTotal),
-                    parseMoney(txtExtraCharge));
+                    parseMoney(txtExtraCharge)*/);
 
             saveReservation(rsv, "Pending");
         });
