@@ -160,7 +160,7 @@ public class DbManager {
         return rows;
     }
 
-//for filling the room combo box in the reservation form
+//For filling the room combo box in the reservation form
 
     public static List<String> getRoomNumbers() {
         List<String> list = new ArrayList<>();
@@ -172,6 +172,45 @@ public class DbManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return list;
+    }
+
+    //One item of the room dropdown shows a label, remembers the room number
+
+    public static class RoomOption {
+        public final String roomNumber;
+        private final String label;
+
+        public RoomOption(String roomNumber, String label) {
+            this.roomNumber = roomNumber;
+            this.label = label;
+        }
+
+        @Override
+        public String toString() { return label; }   // this is what the combo box displays
+    }
+
+    //If availableOnly is true - only rooms with status "Available" (for guests)
+    //If availableOnly is false - everything except "Maintenance", occupied ones get a tag
+    public static List<RoomOption> getRoomOptions(boolean availableOnly) {
+        List<RoomOption> list = new ArrayList<>();
+        String where = availableOnly ? "status = 'Available'" : "status <> 'Maintenance'";
+        String sql = "SELECT room_number, room_type, price_per_night, capacity, status "
+                + "FROM rooms WHERE " + where + " ORDER BY room_number";
+        try (Connection conn = getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                String number = rs.getString("room_number");
+                String label = String.format("Room %s — %s (₱%,.0f/night, max:%d)",
+                        number, rs.getString("room_type"),
+                        rs.getDouble("price_per_night"), rs.getInt("capacity"));
+                if (!availableOnly && "Occupied".equals(rs.getString("status"))) {
+                    label += " [Currently Occupied]";
+                }
+                list.add(new RoomOption(number, label));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
         return list;
     }
 
@@ -334,18 +373,18 @@ public class DbManager {
     }
 
     //limits guest name as their username
-    public static List<Object[]> getReservationsByGuest(String username) {
+    public static List<Object[]> getReservationsByGuest(String guestName) {
         List<Object[]> rows = new ArrayList<>();
         String sql = """
-                SELECT r.id, r.guest_name, r.guest_email, r.guest_phone, rm.room_number,
-                       r.check_in, r.check_out, r.base_amount, r.extra_charge,
-                       r.total_amount, r.status
-                FROM reservations r JOIN rooms rm ON r.room_id = rm.id
-                WHERE r.guest_name = ?
-                ORDER BY r.id DESC""";
+            SELECT r.id, r.guest_name, r.guest_email, r.guest_phone, rm.room_number,
+                   r.check_in, r.check_out, r.base_amount, r.extra_charge,
+                   r.total_amount, r.status
+            FROM reservations r JOIN rooms rm ON r.room_id = rm.id
+            WHERE r.guest_name = ?
+            ORDER BY r.id DESC""";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, username);
+            ps.setString(1, guestName);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 rows.add(new Object[]{
@@ -355,9 +394,7 @@ public class DbManager {
                         LocalDate.parse(rs.getString(7)).format(Reservation.DATE_FMT),
                         rs.getDouble(8), rs.getDouble(9), rs.getDouble(10), rs.getString(11)});
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
         return rows;
     }
 
