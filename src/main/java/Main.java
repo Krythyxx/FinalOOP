@@ -107,11 +107,9 @@ public class Main {
             JFrame frame = new JFrame("Hotel and Resort Management System");
             frame.setContentPane(new Main().mainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            //frame.pack();
             frame.setSize(550,750);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
-
         });
     }
 }
