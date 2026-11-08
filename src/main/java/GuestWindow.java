@@ -28,6 +28,7 @@ public class GuestWindow extends BaseWindow {
     private JScrollPane scrlPnGuestRooms;
     private JTextField txtCheckIn;
     private JTextField txtCheckOut;
+    private JLabel lblMaxCapacity;
 
     DefaultTableModel tableGuestReservation = new DefaultTableModel();
     DefaultTableModel tableGuestRooms = new DefaultTableModel();
@@ -45,7 +46,7 @@ public class GuestWindow extends BaseWindow {
         //the guest name is always their username and cant be edited
         ReservationForm form = new ReservationForm(getUsername(), tblGuestRsrv,
                 txtGuestName, txtEmail, txtPhone, cmbReservationRoom, txtCheckIn, txtCheckOut,
-                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal);
+                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal, lblMaxCapacity);
         bindBookingButtons(form, btnAddReservation, btnClearForm);
 
         //return to Main

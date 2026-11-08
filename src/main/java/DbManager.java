@@ -223,6 +223,20 @@ public class DbManager {
         }
     }
 
+    //Max guests of a room
+    public static int getCapacity(String roomNumber) {
+        String sql = "SELECT capacity FROM rooms WHERE room_number = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, roomNumber);
+            ResultSet rs = ps.executeQuery();
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public static String addRoom(String roomNumber, String type, double price,
                                  int capacity, String status, String description) {
         String invalid = validateRoom(roomNumber, price);

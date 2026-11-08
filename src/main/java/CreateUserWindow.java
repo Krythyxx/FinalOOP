@@ -12,6 +12,12 @@ public class CreateUserWindow {
     private JButton btnBackToLogin;
 
     public CreateUserWindow() {
+        //caret and padding
+        for (JTextField f : new JTextField[]{txtName, txtUserName, txtPassword, txtConfirm}) {
+            f.setHorizontalAlignment(JTextField.CENTER);
+        }
+        BaseWindow.styleFields(txtName, txtUserName, txtPassword, txtConfirm);
+
 
         btnCreateAccount.addActionListener(new ActionListener() {
             @Override

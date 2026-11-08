@@ -70,6 +70,7 @@ public class AdminWindow extends BaseWindow {
     private JScrollPane scrlPnAdminRooms;
     private JScrollPane scrlPnAdminUsers;
     private JPanel tbdPanAdmin;
+    private JLabel lblMaxCapacity;
 
     DefaultTableModel tableAdminDashboard = new DefaultTableModel();
     DefaultTableModel tableAdminReservation = new DefaultTableModel();
@@ -88,7 +89,7 @@ public class AdminWindow extends BaseWindow {
 
         ReservationForm form = new ReservationForm(null, tblAdminRsrv,
                 txtGuestName, txtEmail, txtPhone, cmbReservationRoom, txtCheckIn, txtCheckOut,
-                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal);
+                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal, lblMaxCapacity);
         bindBookingButtons(form, btnAddReservation, btnClearForm);
         bindStatusButtons(tblAdminRsrv, tableAdminReservation, form,
                 btnAcceptRequest, btnDeclineRequest, btnCheckIn, btnCheckOut, btnCancel, btnDelete);

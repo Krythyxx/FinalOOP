@@ -58,6 +58,7 @@ public class StaffWindow extends BaseWindow {
     private JButton btnDeleteSelected;
     private JLabel txtUserName;
     private JTextField txtUserRole;
+    private JLabel lblMaxCapacity;
 
     DefaultTableModel tableStaffDashboard = new DefaultTableModel();
     DefaultTableModel tableStaffReservation = new DefaultTableModel();
@@ -75,7 +76,7 @@ public class StaffWindow extends BaseWindow {
 
         ReservationForm form = new ReservationForm(null, tblStaffRsrv,
                 txtGuestName, txtEmail, txtPhone, cmbReservationRoom, txtCheckIn, txtCheckOut,
-                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal);
+                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal, lblMaxCapacity);
         bindBookingButtons(form, btnAddReservation, btnClearForm);
         bindStatusButtons(tblStaffRsrv, tableStaffReservation, form,
                 btnAcceptRequest, btnDeclineRequest, btnCheckIn, btnCheckOut, btnCancel, btnDelete);

@@ -228,7 +228,7 @@
                               <foreground color="-922881"/>
                             </properties>
                           </component>
-                          <component id="569f" class="javax.swing.JLabel">
+                          <component id="569f" class="javax.swing.JLabel" binding="lblMaxCapacity">
                             <constraints>
                               <grid row="7" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>

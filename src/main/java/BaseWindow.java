@@ -223,6 +223,7 @@ public abstract class BaseWindow {
         private final JSpinner guests;
         private final JComboBox<?> rooms;
         private final JTextArea base, extra, total;
+        private final JLabel capacityLabel;
         private final JTable table;
         private final String fixedGuestName;
 
@@ -230,12 +231,13 @@ public abstract class BaseWindow {
                         JTextField guest, JTextField email, JTextField phone, JComboBox<?> rooms,
                         JTextField checkIn, JTextField checkOut, JSpinner guests,
                         JTextField request, JTextField comments,
-                        JTextArea base, JTextArea extra, JTextArea total) {
+                        JTextArea base, JTextArea extra, JTextArea total, JLabel capacityLabel) {
             this.fixedGuestName = fixedGuestName; this.table = table;
             this.guest = guest; this.email = email; this.phone = phone; this.rooms = rooms;
             this.checkIn = checkIn; this.checkOut = checkOut; this.guests = guests;
             this.request = request; this.comments = comments;
             this.base = base; this.extra = extra; this.total = total;
+            this.capacityLabel = capacityLabel;
 
             styleFields(guest, email, phone, checkIn, checkOut, request, comments);
             guests.setModel(new SpinnerNumberModel(1, 1, 30, 1));
@@ -254,7 +256,10 @@ public abstract class BaseWindow {
             // the price follows whatever the user changes
             onTextChange(checkIn, this::refreshQuote);
             onTextChange(checkOut, this::refreshQuote);
-            rooms.addActionListener(e -> refreshQuote());
+            rooms.addActionListener(e -> {
+                refreshCapacity();
+                refreshQuote();
+            });
             guests.addChangeListener(e -> refreshQuote());
 
             //Clicking a row moves its values to the form
@@ -307,6 +312,13 @@ public abstract class BaseWindow {
             base.setText(money(table.getValueAt(row, COL_BASE)));
             extra.setText(money(table.getValueAt(row, COL_EXTRA)));
             total.setText(money(table.getValueAt(row, COL_TOTAL)));
+        }
+
+        //max capacity displayer
+        private void refreshCapacity() {
+            int max = DbManager.getCapacity(roomNumberOf(rooms));
+            capacityLabel.setText(max == 0 ? "Max. Capacity: -"
+                    : "Max. Capacity: " + max + (max == 1 ? " guest" : " guests"));
         }
 
         //data preview displayer
