@@ -242,21 +242,21 @@ public class DbManager {
 
     public static String addReservation(Reservation r, String status) {
         try {
-            LocalDate in = LocalDate.parse(r.checkIn, Reservation.DATE_FMT);
-            LocalDate out = LocalDate.parse(r.checkOut, Reservation.DATE_FMT);
+            LocalDate in = LocalDate.parse(r.getCheckIn(), Reservation.DATE_FMT);
+            LocalDate out = LocalDate.parse(r.getCheckOut(), Reservation.DATE_FMT);
             long nights = ChronoUnit.DAYS.between(in, out);
 
             try (Connection conn = getConnection()) {
 
-                //Find the room (r.room holds the room number, e.g. "101")
+                //Find the room
                 int roomId;
                 double price;
                 int capacity;
                 try (PreparedStatement ps = conn.prepareStatement(
                         "SELECT id, price_per_night, capacity FROM rooms WHERE room_number = ?")) {
-                    ps.setString(1, r.room);
+                    ps.setString(1, r.getRoom());
                     ResultSet rs = ps.executeQuery();
-                    if (!rs.next()) return "Room " + r.room + " does not exist.";
+                    if (!rs.next()) return "Room " + r.getRoom() + " does not exist.";
                     roomId = rs.getInt(1);
                     price = rs.getDouble(2);
                     capacity = rs.getInt(3);
@@ -271,31 +271,31 @@ public class DbManager {
                     ps.setString(2, in.toString());
                     ps.setString(3, out.toString());
                     ResultSet rs = ps.executeQuery();
-                    if (rs.next()) return "Room " + r.room + " is already booked from "
+                    if (rs.next()) return "Room " + r.getRoom() + " is already booked from "
                             + rs.getString(1) + " to " + rs.getString(2) + ".";
                 }
 
                 double base = nights * price;
-                double extra = Math.max(0, r.numberOfGuests - capacity) * 200 * nights;
+                double extra = Math.max(0, r.getNumberOfGuests() - capacity) * 200 * nights;
 
                 try (PreparedStatement ps = conn.prepareStatement("""
                         INSERT INTO reservations
                           (guest_name, guest_email, guest_phone, room_id, check_in, check_out,
                            guests, base_amount, extra_charge, total_amount, status, notes, comments)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""")) {
-                    ps.setString(1, r.guestName);
-                    ps.setString(2, r.email);
-                    ps.setString(3, r.phone);
+                    ps.setString(1, r.getGuestName());
+                    ps.setString(2, r.getEmail());
+                    ps.setString(3, r.getPhone());
                     ps.setInt(4, roomId);
                     ps.setString(5, in.toString());     // stored as yyyy-MM-dd
                     ps.setString(6, out.toString());
-                    ps.setInt(7, r.numberOfGuests);
+                    ps.setInt(7, r.getNumberOfGuests());
                     ps.setDouble(8, base);
                     ps.setDouble(9, extra);
                     ps.setDouble(10, base + extra);
                     ps.setString(11, status);
-                    ps.setString(12, r.specialRequest);
-                    ps.setString(13, r.comments);
+                    ps.setString(12, r.getSpecialRequest());
+                    ps.setString(13, r.getComments());
                     ps.executeUpdate();
                 }
             }
@@ -333,7 +333,7 @@ public class DbManager {
         }
     }
 
-    //limits guest guest name as their username
+    //limits guest name as their username
     public static List<Object[]> getReservationsByGuest(String username) {
         List<Object[]> rows = new ArrayList<>();
         String sql = """
