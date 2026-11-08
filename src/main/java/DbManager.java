@@ -140,8 +140,7 @@ public class DbManager {
     }
 
 
-//Add/Delete method for "Rooms"
-
+    //Rooms Buttons
     public static List<Object[]> getAllRooms() {
         List<Object[]> rows = new ArrayList<>();
         String sql = "SELECT id, room_number, room_type, price_per_night, capacity, status, "
@@ -160,23 +159,7 @@ public class DbManager {
         return rows;
     }
 
-//For filling the room combo box in the reservation form
-
-    public static List<String> getRoomNumbers() {
-        List<String> list = new ArrayList<>();
-        String sql = "SELECT room_number FROM rooms WHERE status <> 'Maintenance' ORDER BY room_number";
-        try (Connection conn = getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) list.add(rs.getString(1));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
     //One item of the room dropdown shows a label, remembers the room number
-
     public static class RoomOption {
         public final String roomNumber;
         private final String label;
@@ -190,8 +173,8 @@ public class DbManager {
         public String toString() { return label; }   // this is what the combo box displays
     }
 
-    //If availableOnly is true - only rooms with status "Available" (for guests)
-    //If availableOnly is false - everything except "Maintenance", occupied ones get a tag
+    //If availableOnly is true
+    //If availableOnly is false
     public static List<RoomOption> getRoomOptions(boolean availableOnly) {
         List<RoomOption> list = new ArrayList<>();
         String where = availableOnly ? "status = 'Available'" : "status <> 'Maintenance'";
@@ -214,10 +197,36 @@ public class DbManager {
         return list;
     }
 
+    //Pricing
+    private static final double EXTRA_GUEST_FEE = 200;
+
+    public static double[] computeQuote(double pricePerNight, int capacity, long nights, int guests) {
+        double base = nights * pricePerNight;
+        double extra = Math.max(0, guests - capacity) * EXTRA_GUEST_FEE * nights;
+        return new double[]{base, extra, base + extra};
+    }
+
+    //gets the room up and prices the stay
+    public static double[] getQuote(String roomNumber, LocalDate in, LocalDate out, int guests) {
+        long nights = ChronoUnit.DAYS.between(in, out);
+        if (nights < 1) return null;
+        String sql = "SELECT price_per_night, capacity FROM rooms WHERE room_number = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, roomNumber);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) return null;
+            return computeQuote(rs.getDouble(1), rs.getInt(2), nights, guests);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String addRoom(String roomNumber, String type, double price,
                                  int capacity, String status, String description) {
-        if (roomNumber.isBlank()) return "Room number is required.";
-        if (price <= 0) return "Price must be greater than 0.";
+        String invalid = validateRoom(roomNumber, price);
+        if (invalid != null) return invalid;
         String sql = "INSERT INTO rooms (room_number, room_type, price_per_night, capacity, status, description) "
                 + "VALUES (?,?,?,?,?,?)";
         try (Connection conn = getConnection();
@@ -228,6 +237,35 @@ public class DbManager {
             ps.setInt(4, capacity);
             ps.setString(5, status);
             ps.setString(6, description);
+            ps.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            if (e.getMessage().contains("UNIQUE")) return "That room number already exists.";
+            return "Database error: " + e.getMessage();
+        }
+    }
+
+    private static String validateRoom(String roomNumber, double price) {
+        if (roomNumber.isBlank()) return "Room number is required.";
+        if (price <= 0) return "Price must be greater than 0.";
+        return null;
+    }
+
+    public static String updateRoom(int id, String roomNumber, String type, double price,
+                                    int capacity, String status, String description) {
+        String invalid = validateRoom(roomNumber, price);
+        if (invalid != null) return invalid;
+        String sql = "UPDATE rooms SET room_number = ?, room_type = ?, price_per_night = ?, "
+                + "capacity = ?, status = ?, description = ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, roomNumber);
+            ps.setString(2, type);
+            ps.setDouble(3, price);
+            ps.setInt(4, capacity);
+            ps.setString(5, status);
+            ps.setString(6, description);
+            ps.setInt(7, id);
             ps.executeUpdate();
             return null;
         } catch (SQLException e) {
@@ -250,19 +288,29 @@ public class DbManager {
         }
     }
 
-//ADD/DELETE method for "RESERVATIONS"
+    //add and delete for reservations
+    private static final String RESERVATION_SELECT = """
+            SELECT r.id, r.guest_name, r.guest_email, r.guest_phone, rm.room_number,
+                   r.check_in, r.check_out, r.base_amount, r.extra_charge,
+                   r.total_amount, r.status
+            FROM reservations r JOIN rooms rm ON r.room_id = rm.id""";
 
     public static List<Object[]> getAllReservations() {
+        return queryReservations("", null);
+    }
+
+    //limits guest name as their username
+    public static List<Object[]> getReservationsByGuest(String guestName) {
+        return queryReservations("WHERE r.guest_name = ? ", guestName);
+    }
+
+    //runs the select and turns each row into the tables columns
+    private static List<Object[]> queryReservations(String where, String guestName) {
         List<Object[]> rows = new ArrayList<>();
-        String sql = """
-                SELECT r.id, r.guest_name, r.guest_email, r.guest_phone, rm.room_number,
-                       r.check_in, r.check_out, r.base_amount, r.extra_charge,
-                       r.total_amount, r.status
-                FROM reservations r JOIN rooms rm ON r.room_id = rm.id
-                ORDER BY r.id DESC""";
         try (Connection conn = getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+             PreparedStatement ps = conn.prepareStatement(RESERVATION_SELECT + " " + where + "ORDER BY r.id DESC")) {
+            if (guestName != null) ps.setString(1, guestName);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 rows.add(new Object[]{
                         rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
@@ -276,8 +324,6 @@ public class DbManager {
         }
         return rows;
     }
-
-    //Status: "Confirmed" for staff/admin direct booking, "Pending" for guest requests
 
     public static String addReservation(Reservation r, String status) {
         try {
@@ -301,7 +347,7 @@ public class DbManager {
                     capacity = rs.getInt(3);
                 }
 
-                //Double-booking check (same idea as main.py)
+                //Double-booking check
                 try (PreparedStatement ps = conn.prepareStatement("""
                         SELECT check_in, check_out FROM reservations
                         WHERE room_id = ? AND status IN ('Confirmed','Checked In')
@@ -314,8 +360,7 @@ public class DbManager {
                             + rs.getString(1) + " to " + rs.getString(2) + ".";
                 }
 
-                double base = nights * price;
-                double extra = Math.max(0, r.getNumberOfGuests() - capacity) * 200 * nights;
+                double[] quote = computeQuote(price, capacity, nights, r.getNumberOfGuests());
 
                 try (PreparedStatement ps = conn.prepareStatement("""
                         INSERT INTO reservations
@@ -326,12 +371,12 @@ public class DbManager {
                     ps.setString(2, r.getEmail());
                     ps.setString(3, r.getPhone());
                     ps.setInt(4, roomId);
-                    ps.setString(5, in.toString());     // stored as yyyy-MM-dd
+                    ps.setString(5, in.toString());
                     ps.setString(6, out.toString());
                     ps.setInt(7, r.getNumberOfGuests());
-                    ps.setDouble(8, base);
-                    ps.setDouble(9, extra);
-                    ps.setDouble(10, base + extra);
+                    ps.setDouble(8, quote[0]);
+                    ps.setDouble(9, quote[1]);
+                    ps.setDouble(10, quote[2]);
                     ps.setString(11, status);
                     ps.setString(12, r.getSpecialRequest());
                     ps.setString(13, r.getComments());
@@ -372,32 +417,6 @@ public class DbManager {
         }
     }
 
-    //limits guest name as their username
-    public static List<Object[]> getReservationsByGuest(String guestName) {
-        List<Object[]> rows = new ArrayList<>();
-        String sql = """
-            SELECT r.id, r.guest_name, r.guest_email, r.guest_phone, rm.room_number,
-                   r.check_in, r.check_out, r.base_amount, r.extra_charge,
-                   r.total_amount, r.status
-            FROM reservations r JOIN rooms rm ON r.room_id = rm.id
-            WHERE r.guest_name = ?
-            ORDER BY r.id DESC""";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, guestName);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                rows.add(new Object[]{
-                        rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5),
-                        LocalDate.parse(rs.getString(6)).format(Reservation.DATE_FMT),
-                        LocalDate.parse(rs.getString(7)).format(Reservation.DATE_FMT),
-                        rs.getDouble(8), rs.getDouble(9), rs.getDouble(10), rs.getString(11)});
-            }
-        } catch (SQLException e) { e.printStackTrace(); }
-        return rows;
-    }
-
     public static String deleteReservation(int id) {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement("DELETE FROM reservations WHERE id = ?")) {
@@ -407,5 +426,44 @@ public class DbManager {
         } catch (SQLException e) {
             return "Database error: " + e.getMessage();
         }
+    }
+
+    //Numbers for the Dashboard tab
+    public static class DashboardStats {
+        public final int availableRooms, occupiedRooms, checkInsToday, pendingRequests;
+        public final double potentialRevenue;
+
+        DashboardStats(int availableRooms, int occupiedRooms, int checkInsToday,
+                       int pendingRequests, double potentialRevenue) {
+            this.availableRooms = availableRooms;
+            this.occupiedRooms = occupiedRooms;
+            this.checkInsToday = checkInsToday;
+            this.pendingRequests = pendingRequests;
+            this.potentialRevenue = potentialRevenue;
+        }
+    }
+
+    public static DashboardStats getDashboardStats() {
+        String sql = """
+                SELECT (SELECT COUNT(*) FROM rooms WHERE status <> 'Maintenance'),
+                       (SELECT COUNT(DISTINCT room_id) FROM reservations WHERE status = 'Checked In'),
+                       (SELECT COUNT(*) FROM reservations
+                         WHERE status IN ('Confirmed','Checked In') AND check_in = ?),
+                       (SELECT COUNT(*) FROM reservations WHERE status = 'Pending'),
+                       (SELECT COALESCE(SUM(total_amount), 0) FROM reservations
+                         WHERE status IN ('Pending','Confirmed'))""";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, LocalDate.now().toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int occupied = rs.getInt(2);
+                return new DashboardStats(Math.max(0, rs.getInt(1) - occupied), occupied,
+                        rs.getInt(3), rs.getInt(4), rs.getDouble(5));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new DashboardStats(0, 0, 0, 0, 0);
     }
 }//Closes the DbManager class

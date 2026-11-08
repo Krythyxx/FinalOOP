@@ -834,18 +834,7 @@
                           <text value="ROOM TYPE"/>
                         </properties>
                       </component>
-                      <component id="f8658" class="javax.swing.JTextField" binding="textField16" default-binding="true">
-                        <constraints>
-                          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <background color="-15063755"/>
-                          <foreground color="-922881"/>
-                        </properties>
-                      </component>
-                      <component id="605d9" class="javax.swing.JComboBox" binding="comboBox4" default-binding="true">
+                      <component id="605d9" class="javax.swing.JComboBox" binding="cmbRoomType">
                         <constraints>
                           <grid row="2" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -877,10 +866,11 @@
                         <properties>
                           <font name="SansSerif" style="1"/>
                           <foreground color="-9797956"/>
+                          <labelFor value="78d73"/>
                           <text value="STATUS"/>
                         </properties>
                       </component>
-                      <component id="70b8" class="javax.swing.JSpinner" binding="spinner2" default-binding="true">
+                      <component id="70b8" class="javax.swing.JSpinner" binding="spnrMaxCapacity">
                         <constraints>
                           <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -888,7 +878,7 @@
                           <background color="-15063755"/>
                         </properties>
                       </component>
-                      <component id="78d73" class="javax.swing.JComboBox" binding="comboBox5" default-binding="true">
+                      <component id="78d73" class="javax.swing.JComboBox" binding="cmbStatus">
                         <constraints>
                           <grid row="4" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -902,7 +892,7 @@
                           </model>
                         </properties>
                       </component>
-                      <component id="8a773" class="javax.swing.JButton" binding="addRoomButton" default-binding="true">
+                      <component id="8a773" class="javax.swing.JButton" binding="btnAddRoom">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -911,17 +901,6 @@
                           <font name="Segoe UI Black" size="14"/>
                           <foreground color="-15787741"/>
                           <text value="Add Room"/>
-                        </properties>
-                      </component>
-                      <component id="43ebf" class="javax.swing.JTextField" binding="textField17" default-binding="true">
-                        <constraints>
-                          <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <background color="-15063755"/>
-                          <foreground color="-922881"/>
                         </properties>
                       </component>
                       <component id="d0a44" class="javax.swing.JLabel">
@@ -934,17 +913,6 @@
                           <text value="PRICE/NIGHT(IN PESOS)"/>
                         </properties>
                       </component>
-                      <component id="fad7c" class="javax.swing.JTextField" binding="textField18" default-binding="true">
-                        <constraints>
-                          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <background color="-15063755"/>
-                          <foreground color="-922881"/>
-                        </properties>
-                      </component>
                       <component id="95184" class="javax.swing.JLabel">
                         <constraints>
                           <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -955,7 +923,7 @@
                           <text value="DESCRIPTION"/>
                         </properties>
                       </component>
-                      <component id="6e301" class="javax.swing.JButton" binding="updateSelectedButton" default-binding="true">
+                      <component id="6e301" class="javax.swing.JButton" binding="btnUpdateSelected">
                         <constraints>
                           <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -966,7 +934,7 @@
                           <text value="Update Selected"/>
                         </properties>
                       </component>
-                      <component id="f08ef" class="javax.swing.JButton" binding="deleteSelectedButton" default-binding="true">
+                      <component id="f08ef" class="javax.swing.JButton" binding="btnDeleteSelected">
                         <constraints>
                           <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -975,6 +943,39 @@
                           <font name="Segoe UI Black" size="14"/>
                           <foreground color="-922881"/>
                           <text value="Delete Selected"/>
+                        </properties>
+                      </component>
+                      <component id="f8658" class="javax.swing.JTextField" binding="txtRoomNumber">
+                        <constraints>
+                          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="150" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <background color="-15063755"/>
+                          <foreground color="-922881"/>
+                        </properties>
+                      </component>
+                      <component id="43ebf" class="javax.swing.JTextField" binding="txtPrice">
+                        <constraints>
+                          <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="150" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <background color="-15063755"/>
+                          <foreground color="-922881"/>
+                        </properties>
+                      </component>
+                      <component id="fad7c" class="javax.swing.JTextField" binding="txtDescription">
+                        <constraints>
+                          <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="150" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <background color="-15063755"/>
+                          <foreground color="-922881"/>
                         </properties>
                       </component>
                     </children>

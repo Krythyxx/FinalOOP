@@ -4,22 +4,19 @@ import java.time.format.DateTimeFormatter;
 public class Reservation {
     public static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
-    private int id;
-    private String guestName, email, phone, room;
-    private String checkIn, checkOut;
-    private int numberOfGuests;
-    private String specialRequest, comments;
-    private double baseAmount, extraCharge;
-    private String status = "Pending";
+    private final int id;
+    private final String guestName, email, phone, room;
+    private final String checkIn, checkOut;
+    private final int numberOfGuests;
+    private final String specialRequest, comments;
 
     public Reservation(int id, String guestName, String email, String phone, String room,
                        String checkIn, String checkOut, int numberOfGuests,
-                       String specialRequest, String comments/*,
-                       double baseAmount, double extraCharge*/) {
+                       String specialRequest, String comments) {
         this.id = id; this.guestName = guestName; this.email = email; this.phone = phone;
         this.room = room; this.checkIn = checkIn; this.checkOut = checkOut;
         this.numberOfGuests = numberOfGuests; this.specialRequest = specialRequest;
-        this.comments = comments; this.baseAmount = baseAmount; this.extraCharge = extraCharge;
+        this.comments = comments;
     }
 
     //getters
@@ -33,16 +30,8 @@ public class Reservation {
     public int getNumberOfGuests() { return numberOfGuests; }
     public String getSpecialRequest() { return specialRequest; }
     public String getComments() { return comments; }
-    public double getBaseAmount() { return baseAmount; }
-    public double getExtraCharge() { return extraCharge; }
-    public String getStatus() { return status; }
 
-    //setters
-    public void setStatus(String status) { this.status = status; }
-    public void setExtraCharge(double extraCharge) { this.extraCharge = extraCharge; }
-
-    public double getTotal() { return baseAmount + extraCharge; }
-
+    //returns an error message, or null when everything is valid
     public String validate() {
         if (guestName.isBlank()) return "Guest name is required.";
         if (!email.matches("^[\\w.+-]+@[\\w-]+\\.[\\w.]+$")) return "Enter a valid email.";
@@ -61,10 +50,5 @@ public class Reservation {
         if (in.isBefore(LocalDate.now())) return "Check-in cannot be before today.";
         if (!out.isAfter(in)) return "Check-out must be after check-in.";
         return null;
-    }
-
-    public Object[] toRow() {
-        return new Object[]{ id, guestName, email, phone, room, checkIn, checkOut,
-                baseAmount, extraCharge, getTotal(), status };
     }
 }

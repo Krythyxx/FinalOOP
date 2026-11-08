@@ -1,8 +1,6 @@
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+import java.util.List;
 
 public class AdminWindow extends BaseWindow {
     private JButton btnLogOut;
@@ -43,7 +41,6 @@ public class AdminWindow extends BaseWindow {
     private JTable tblAdminRsrv;
     private JTextField txtCheckIn;
     private JTextField txtCheckOut;
-    private TableRowSorter<DefaultTableModel> sorter;
 
     //For Admin Rooms Tab
     private JTable tblAdminRooms;
@@ -83,109 +80,26 @@ public class AdminWindow extends BaseWindow {
         super(username);
 
         //For Admin Dashboard
-        setColumns(tableAdminDashboard, DASHBOARD_COLUMNS);
-        tblAdminDashboard.setModel(tableAdminDashboard);
+        initTable(tblAdminDashboard, tableAdminDashboard, DASHBOARD_COLUMNS);
 
         //For Admin Reservation
-        setColumns(tableAdminReservation, RESERVATION_COLUMNS);
-        tblAdminRsrv.setModel(tableAdminReservation);
-        sorter = new TableRowSorter<>(tableAdminReservation);
-        tblAdminRsrv.setRowSorter(sorter);
+        initTable(tblAdminRsrv, tableAdminReservation, RESERVATION_COLUMNS);
+        installFilter(tblAdminRsrv, tableAdminReservation, txtSearch, cmbFilter);
 
-        // fixing TextField
-        styleFields(txtGuestName, txtEmail, txtPhone, txtCheckIn, txtCheckOut,
-                txtSpecialRequest, txtComments/*, txtBaseTotal, txtExtraCharge*/, txtSearch);
-
-        //search and filter
-        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e)  { applyFilter(sorter, txtSearch, cmbFilter); }
-            public void removeUpdate(DocumentEvent e)  { applyFilter(sorter, txtSearch, cmbFilter); }
-            public void changedUpdate(DocumentEvent e) { applyFilter(sorter, txtSearch, cmbFilter); }
-        });
-        cmbFilter.addActionListener(e -> applyFilter(sorter, txtSearch, cmbFilter));
-        setSearchHint(txtSearch);
+        ReservationForm form = new ReservationForm(null, tblAdminRsrv,
+                txtGuestName, txtEmail, txtPhone, cmbReservationRoom, txtCheckIn, txtCheckOut,
+                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal);
+        bindBookingButtons(form, btnAddReservation, btnClearForm);
+        bindStatusButtons(tblAdminRsrv, tableAdminReservation, form,
+                btnAcceptRequest, btnDeclineRequest, btnCheckIn, btnCheckOut, btnCancel, btnDelete);
 
         //Rooms and Users tables
-        setColumns(tableAdminRooms, ROOM_COLUMNS);
-        tblAdminRooms.setModel(tableAdminRooms);
-
-        setColumns(tableAdminUsers, "ID", "FULL NAME", "USERNAME", "ROLE", "DATE CREATED");
-        tblAdminUsers.setModel(tableAdminUsers);
+        initTable(tblAdminRooms, tableAdminRooms, ROOM_COLUMNS);
+        initTable(tblAdminUsers, tableAdminUsers, "ID", "FULL NAME", "USERNAME", "ROLE", "DATE CREATED");
 
         //return to Main
         btnLogOut.addActionListener(e -> logOut(btnLogOut));
 
-        //Reservation Button
-        btnAddReservation.addActionListener(e -> {
-            Object room = cmbReservationRoom.getSelectedItem();
-
-            Reservation rsv = new Reservation(
-                    0,
-                    txtGuestName.getText().trim(),
-                    txtEmail.getText().trim(),
-                    txtPhone.getText().trim(),
-                    room == null ? "" : room.toString(),
-                    txtCheckIn.getText().trim(),
-                    txtCheckOut.getText().trim(),
-                    (Integer) spnrNumberOfGuest.getValue(),
-                    txtSpecialRequest.getText(),
-                    txtComments.getText()/*,
-                    parseMoney(txtBaseTotal),
-                    parseMoney(txtExtraCharge)*/);
-
-            saveReservation(rsv, "Pending");
-        });
-
-        //Clear Button
-        btnClearForm.addActionListener(e -> {
-            tblAdminRsrv.clearSelection();
-
-            txtGuestName.setText("");
-            txtEmail.setText("");
-            txtPhone.setText("");
-            txtCheckIn.setText("");
-            txtCheckOut.setText("");
-            txtSpecialRequest.setText("");
-            txtComments.setText("");
-            txtBaseTotal.setText("");
-            txtExtraCharge.setText("");
-            txtTotal.setText("");
-
-            spnrNumberOfGuest.setValue(0);
-
-            if (cmbReservationRoom.getItemCount() > 0) {
-                cmbReservationRoom.setSelectedIndex(0);
-            }
-        });
-
-        //status buttons
-        btnAcceptRequest.addActionListener(e -> changeStatus(tblAdminRsrv, tableAdminReservation, "Confirmed", "Pending"));
-        btnDeclineRequest.addActionListener(e -> changeStatus(tblAdminRsrv, tableAdminReservation, "Declined", "Pending"));
-        btnCheckIn.addActionListener(e -> changeStatus(tblAdminRsrv, tableAdminReservation, "Checked In", "Confirmed"));
-        btnCheckOut.addActionListener(e -> changeStatus(tblAdminRsrv, tableAdminReservation, "Checked Out", "Checked In"));
-        btnCancel.addActionListener(e -> changeStatus(tblAdminRsrv, tableAdminReservation, "Cancelled", "Pending", "Confirmed"));
-        btnDelete.addActionListener(e -> {
-            if (deleteSelectedReservation(tblAdminRsrv)) btnClearForm.doClick();
-        });
-
-        //clicking a row moves its values to the text fields
-        tblAdminRsrv.getSelectionModel().addListSelectionListener(event -> {
-            int row = tblAdminRsrv.getSelectedRow();
-            if (event.getValueIsAdjusting() || row == -1) return;
-
-            txtGuestName.setText(cellText(tblAdminRsrv, row, 1));
-            txtEmail.setText(cellText(tblAdminRsrv, row, 2));
-            txtPhone.setText(cellText(tblAdminRsrv, row, 3));
-            cmbReservationRoom.setSelectedItem(cellText(tblAdminRsrv, row, 4));
-            txtCheckIn.setText(cellText(tblAdminRsrv, row, 5));
-            txtCheckOut.setText(cellText(tblAdminRsrv, row, 6));
-            txtBaseTotal.setText(cellText(tblAdminRsrv, row, 7));
-            txtExtraCharge.setText(cellText(tblAdminRsrv, row, 8));
-            txtTotal.setText(cellText(tblAdminRsrv, row, 9));
-        });
-
-        spnrNumberOfGuest.setModel(new SpinnerNumberModel(0, 0, 30, 1));
-        spnrMaxCapacity.setModel(new SpinnerNumberModel(2, 1, 20, 1));
 
         loadUsers();
         loadRooms();
@@ -212,54 +126,34 @@ public class AdminWindow extends BaseWindow {
             loadUsers();
         });
 
-        //Rooms
-        btnAddRoom.addActionListener(e -> {
-            try {
-                double price = Double.parseDouble(txtPrice.getText().trim());
-                String error = DbManager.addRoom(txtRoomNumber.getText().trim(),
-                        cmbRoomType.getSelectedItem().toString(), price,
-                        (Integer) spnrMaxCapacity.getValue(),
-                        cmbStatus.getSelectedItem().toString(), txtDescription.getText().trim());
-                if (error != null) { JOptionPane.showMessageDialog(null, error); return; }
-                txtRoomNumber.setText(""); txtPrice.setText(""); txtDescription.setText("");
-                loadRooms();
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Price must be a number.");
-            }
-        });
-
-        //delete room
-        btnDeleteSelected.addActionListener(e -> {
-            int id = selectedId(tblAdminRooms);
-            if (id == -1) return;
-            if (JOptionPane.showConfirmDialog(null, "Delete this room?", "Confirm",
-                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
-            String error = DbManager.deleteRoom(id);
-            if (error != null) JOptionPane.showMessageDialog(null, error);
-            loadRooms();
-        });
+        //Rooms tab
+        new RoomForm(tblAdminRooms, txtRoomNumber, cmbRoomType, txtPrice, spnrMaxCapacity,
+                cmbStatus, txtDescription, btnAddRoom, btnUpdateSelected, btnDeleteSelected);
 
     }
 
     //Adds Db Table row
     private void loadUsers() {
-        tableAdminUsers.setRowCount(0);
-        for (Object[] row : DbManager.getAllUsers()) tableAdminUsers.addRow(row);
+        fillTable(tableAdminUsers, DbManager.getAllUsers());
     }
 
     @Override
     protected void loadRooms() {
-        tableAdminRooms.setRowCount(0);
-        for (Object[] row : DbManager.getAllRooms()) tableAdminRooms.addRow(row);
-
-        cmbReservationRoom.removeAllItems();
-        for (String n : DbManager.getRoomNumbers()) cmbReservationRoom.addItem(n);
+        fillTable(tableAdminRooms, DbManager.getAllRooms());
+        loadRoomChoices(cmbReservationRoom, false);   // everything except Maintenance
+        refreshDashboard(DbManager.getAllReservations());
     }
 
     @Override
     protected void loadReservations() {
-        tableAdminReservation.setRowCount(0);
-        for (Object[] row : DbManager.getAllReservations()) tableAdminReservation.addRow(row);
+        List<Object[]> rows = DbManager.getAllReservations();
+        fillTable(tableAdminReservation, rows);
+        refreshDashboard(rows);
+    }
+
+    private void refreshDashboard(List<Object[]> reservations) {
+        loadDashboard(tableAdminDashboard, reservations, txtAvailableRooms, txtOccupiedRooms,
+                txtCheckIns, txtCPendingRequest, txtPotentialRevenue);
     }
 
     @Override

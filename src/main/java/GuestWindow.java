@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 public class GuestWindow extends BaseWindow {
     private JPanel guestPanel;
@@ -30,8 +29,6 @@ public class GuestWindow extends BaseWindow {
     private JTextField txtCheckIn;
     private JTextField txtCheckOut;
 
-    private TableRowSorter<DefaultTableModel> sorter;
-
     DefaultTableModel tableGuestReservation = new DefaultTableModel();
     DefaultTableModel tableGuestRooms = new DefaultTableModel();
 
@@ -39,80 +36,20 @@ public class GuestWindow extends BaseWindow {
         super(username);
 
         //For Guest Reservation
-        setColumns(tableGuestReservation, RESERVATION_COLUMNS);
-        tblGuestRsrv.setModel(tableGuestReservation);
-        sorter = new TableRowSorter<>(tableGuestReservation);
-        tblGuestRsrv.setRowSorter(sorter);
-
-        // fixing TextField
-        styleFields(txtGuestName, txtEmail, txtPhone, txtCheckIn, txtCheckOut/*,
-                txtSpecialRequest, txtComments*/);
-
-        // guest name is always the logged-in username and can't be edited
-        txtGuestName.setText(getUsername());
-        txtGuestName.setEditable(false);
-
-        // status filter (guests have no search box)
-        cmbFilter.addActionListener(e -> applyFilter(sorter, null, cmbFilter));
+        initTable(tblGuestRsrv, tableGuestReservation, RESERVATION_COLUMNS);
+        installFilter(tblGuestRsrv, tableGuestReservation, null, cmbFilter);
 
         //For Guest Rooms
-        setColumns(tableGuestRooms, ROOM_COLUMNS);
-        tblGuestRooms.setModel(tableGuestRooms);
+        initTable(tblGuestRooms, tableGuestRooms, ROOM_COLUMNS);
+
+        //the guest name is always their username and cant be edited
+        ReservationForm form = new ReservationForm(getUsername(), tblGuestRsrv,
+                txtGuestName, txtEmail, txtPhone, cmbReservationRoom, txtCheckIn, txtCheckOut,
+                spnrNumberOfGuest, txtSpecialRequest, txtComments, txtBaseTotal, txtExtraCharge, txtTotal);
+        bindBookingButtons(form, btnAddReservation, btnClearForm);
 
         //return to Main
         btnLogOut.addActionListener(e -> logOut(btnLogOut));
-
-        //Reservation Button
-        btnAddReservation.addActionListener(e -> {
-            // the combo box item can be a RoomOption or a plain room number
-            Object selected = cmbReservationRoom.getSelectedItem();
-            String roomNumber = "";
-            if (selected instanceof DbManager.RoomOption) {
-                roomNumber = ((DbManager.RoomOption) selected).roomNumber;
-            } else if (selected != null) {
-                roomNumber = selected.toString();
-            }
-
-            Reservation rsv = new Reservation(
-                    0,
-                    txtGuestName.getText().trim(),
-                    txtEmail.getText().trim(),
-                    txtPhone.getText().trim(),
-                    roomNumber,
-                    txtCheckIn.getText().trim(),
-                    txtCheckOut.getText().trim(),
-                    (Integer) spnrNumberOfGuest.getValue(),
-                    txtSpecialRequest.getText(),
-                    txtComments.getText()/*,
-                    parseMoney(txtBaseTotal),
-                    parseMoney(txtExtraCharge)*/);
-
-            saveReservation(rsv, "Pending");
-        });
-
-        //Clear Button
-        btnClearForm.addActionListener(e -> {
-            tblGuestRsrv.clearSelection();
-
-            txtGuestName.setText(getUsername());
-            txtEmail.setText("");
-            txtPhone.setText("");
-            txtCheckIn.setText("");
-            txtCheckOut.setText("");
-            txtSpecialRequest.setText("");
-            txtComments.setText("");
-            txtBaseTotal.setText("");
-            txtExtraCharge.setText("");
-            txtTotal.setText("");
-
-            spnrNumberOfGuest.setValue(0);
-
-            if (cmbReservationRoom.getItemCount() > 0) {
-                cmbReservationRoom.setSelectedIndex(0);
-            }
-        });
-
-        spnrNumberOfGuest.setModel(new SpinnerNumberModel(0, 0, 30, 1));
 
         loadRooms();
         loadReservations();
@@ -120,18 +57,14 @@ public class GuestWindow extends BaseWindow {
 
     @Override
     protected void loadRooms() {
-        tableGuestRooms.setRowCount(0);
-        for (Object[] row : DbManager.getAllRooms()) tableGuestRooms.addRow(row);
-
-        cmbReservationRoom.removeAllItems();
-        for (DbManager.RoomOption opt : DbManager.getRoomOptions(true)) cmbReservationRoom.addItem(opt);
+        fillTable(tableGuestRooms, DbManager.getAllRooms());
+        loadRoomChoices(cmbReservationRoom, true);   // guests only see Available rooms
     }
 
     // a guest only sees their own reservations
     @Override
     protected void loadReservations() {
-        tableGuestReservation.setRowCount(0);
-        for (Object[] row : DbManager.getReservationsByGuest(getUsername())) tableGuestReservation.addRow(row);
+        fillTable(tableGuestReservation, DbManager.getReservationsByGuest(getUsername()));
     }
 
     @Override
