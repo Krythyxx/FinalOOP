@@ -124,7 +124,7 @@ public class GuestWindow extends BaseWindow {
         for (Object[] row : DbManager.getAllRooms()) tableGuestRooms.addRow(row);
 
         cmbReservationRoom.removeAllItems();
-        for (String n : DbManager.getRoomNumbers()) cmbReservationRoom.addItem(n);
+        for (DbManager.RoomOption opt : DbManager.getRoomOptions(true)) cmbReservationRoom.addItem(opt);
     }
 
     // a guest only sees their own reservations
