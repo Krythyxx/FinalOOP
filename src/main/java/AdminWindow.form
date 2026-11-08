@@ -546,6 +546,7 @@
                     <properties>
                       <background color="-11969390"/>
                       <editable value="false"/>
+                      <foreground color="-922881"/>
                     </properties>
                   </component>
                   <component id="4b88c" class="javax.swing.JButton" binding="btnAddReservation">
@@ -727,6 +728,7 @@
                     <constraints/>
                     <properties>
                       <background color="-15063755"/>
+                      <foreground color="-922881"/>
                     </properties>
                   </component>
                 </children>
@@ -841,6 +843,7 @@
                     </constraints>
                     <properties>
                       <background color="-15063755"/>
+                      <foreground color="-922881"/>
                       <model>
                         <item value="Standard"/>
                         <item value="Deluxe"/>
@@ -883,6 +886,7 @@
                     </constraints>
                     <properties>
                       <background color="-15063755"/>
+                      <foreground color="-922881"/>
                       <model>
                         <item value="Available"/>
                         <item value="Occupied"/>
@@ -971,6 +975,7 @@
                 </constraints>
                 <properties>
                   <background color="-15063755"/>
+                  <foreground color="-922881"/>
                 </properties>
                 <border type="none"/>
                 <children>
@@ -978,6 +983,7 @@
                     <constraints/>
                     <properties>
                       <background color="-15063755"/>
+                      <foreground color="-922881"/>
                     </properties>
                   </component>
                 </children>
@@ -1226,11 +1232,12 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="457f" class="javax.swing.JTable" binding="tblAdminUsers">
+                  <component id="457f" class="javax.swing.JTable" binding="tblAdminUsers" custom-create="true">
                     <constraints/>
                     <properties>
-                      <foreground color="-15063755"/>
-                      <gridColor color="-15063755"/>
+                      <background color="-15063755"/>
+                      <foreground color="-922881"/>
+                      <gridColor color="-9798014"/>
                     </properties>
                   </component>
                 </children>

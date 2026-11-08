@@ -299,6 +299,7 @@
                               <background color="-11969390"/>
                               <editable value="false"/>
                               <enabled value="false"/>
+                              <foreground color="-922881"/>
                             </properties>
                           </component>
                           <component id="d139d" class="javax.swing.JButton" binding="btnAddReservation">
@@ -319,6 +320,7 @@
                             <properties>
                               <background color="-14668222"/>
                               <font name="Segoe UI Black" size="14" style="1"/>
+                              <foreground color="-922881"/>
                               <text value="Clear Form"/>
                             </properties>
                           </component>
@@ -393,7 +395,7 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="6f89f" class="javax.swing.JTable" binding="tblGuestRsrv">
+                          <component id="6f89f" class="javax.swing.JTable" binding="tblGuestRsrv" custom-create="true">
                             <constraints/>
                             <properties>
                               <background color="-15063755"/>
@@ -441,6 +443,7 @@
                         </constraints>
                         <properties>
                           <background color="-14467499"/>
+                          <foreground color="-922881"/>
                           <model>
                             <item value="All Statuses"/>
                             <item value="Pending"/>
@@ -487,6 +490,7 @@
                             <constraints/>
                             <properties>
                               <background color="-15063755"/>
+                              <foreground color="-922881"/>
                             </properties>
                           </component>
                         </children>
