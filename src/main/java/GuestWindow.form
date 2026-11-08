@@ -243,10 +243,10 @@
                             </constraints>
                             <properties>
                               <foreground color="-7367463"/>
-                              <text value="Base Total:"/>
+                              <text value="Base Total:  "/>
                             </properties>
                           </component>
-                          <component id="9aa2e" class="javax.swing.JTextField" binding="txtBaseTotal">
+                          <component id="90538" class="javax.swing.JTextArea" binding="txtBaseTotal">
                             <constraints>
                               <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
@@ -256,6 +256,7 @@
                               <background color="-14668222"/>
                               <editable value="false"/>
                               <enabled value="false"/>
+                              <foreground color="-922881"/>
                             </properties>
                           </component>
                           <component id="9334a" class="javax.swing.JLabel">
@@ -264,10 +265,10 @@
                             </constraints>
                             <properties>
                               <foreground color="-3242940"/>
-                              <text value="Extra Guest Charge(200 per guest over Max Capacity):"/>
+                              <text value="Extra Guest Charge(200 per guest over Max Capacity):  "/>
                             </properties>
                           </component>
-                          <component id="4d1d1" class="javax.swing.JTextField" binding="txtExtraCharge">
+                          <component id="fd13f" class="javax.swing.JTextArea" binding="txtExtraCharge">
                             <constraints>
                               <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
@@ -277,6 +278,7 @@
                               <background color="-14668222"/>
                               <editable value="false"/>
                               <enabled value="false"/>
+                              <foreground color="-922881"/>
                             </properties>
                           </component>
                           <component id="ae60" class="javax.swing.JLabel">
@@ -286,10 +288,10 @@
                             <properties>
                               <font name="Segoe UI Black" size="16"/>
                               <foreground color="-3232172"/>
-                              <text value="Total:"/>
+                              <text value="Total:  "/>
                             </properties>
                           </component>
-                          <component id="b0c05" class="javax.swing.JTextField" binding="txtTotal">
+                          <component id="1fa7b" class="javax.swing.JTextArea" binding="txtTotal">
                             <constraints>
                               <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
@@ -392,6 +394,7 @@
                         </constraints>
                         <properties>
                           <background color="-15063755"/>
+                          <foreground color="-922881"/>
                         </properties>
                         <border type="none"/>
                         <children>
@@ -399,6 +402,7 @@
                             <constraints/>
                             <properties>
                               <background color="-15063755"/>
+                              <foreground color="-922881"/>
                             </properties>
                           </component>
                         </children>

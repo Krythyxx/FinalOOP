@@ -14,8 +14,8 @@ public class Reservation {
 
     public Reservation(int id, String guestName, String email, String phone, String room,
                        String checkIn, String checkOut, int numberOfGuests,
-                       String specialRequest, String comments,
-                       double baseAmount, double extraCharge) {
+                       String specialRequest, String comments/*,
+                       double baseAmount, double extraCharge*/) {
         this.id = id; this.guestName = guestName; this.email = email; this.phone = phone;
         this.room = room; this.checkIn = checkIn; this.checkOut = checkOut;
         this.numberOfGuests = numberOfGuests; this.specialRequest = specialRequest;
