@@ -40,7 +40,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="b9901" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+              <component id="b9901" class="javax.swing.JTextField" binding="txtUserName">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="350" height="60"/>
@@ -54,7 +54,7 @@
                   <horizontalAlignment value="0"/>
                 </properties>
               </component>
-              <component id="969f6" class="javax.swing.JButton" binding="CREATEACCOUNTButton" default-binding="true">
+              <component id="969f6" class="javax.swing.JButton" binding="btnCreateAccount">
                 <constraints>
                   <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="350" height="60"/>
@@ -93,7 +93,7 @@
                   </grid>
                 </constraints>
               </vspacer>
-              <component id="31127" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+              <component id="31127" class="javax.swing.JPasswordField" binding="txtPassword">
                 <constraints>
                   <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="350" height="60"/>
@@ -115,7 +115,7 @@
                   </grid>
                 </constraints>
               </vspacer>
-              <component id="4f53e" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+              <component id="4f53e" class="javax.swing.JTextField" binding="txtName">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="350" height="60"/>
@@ -144,7 +144,7 @@
                   <text value="CONFIRM PASSWORD"/>
                 </properties>
               </component>
-              <component id="82fda" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+              <component id="82fda" class="javax.swing.JTextField" binding="txtConfirm">
                 <constraints>
                   <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <minimum-size width="350" height="60"/>

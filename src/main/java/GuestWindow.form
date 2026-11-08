@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GuestWindow">
+  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="1118" height="595"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="763e9" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="80820" binding="guestPanel" layout-manager="GridLayoutManager" row-count="2" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-15787741"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="ed51d" class="javax.swing.JLabel" binding="lbl">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Segoe UI Black" size="16" style="1"/>
+                  <foreground color="-3232172"/>
+                  <text value="SHELLY'S PRIVATE RESORT"/>
+                </properties>
+              </component>
+              <hspacer id="ff7f8">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <component id="bacc0" class="javax.swing.JButton" binding="btnLogOut">
+                <constraints>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-15063755"/>
+                  <foreground color="-922881"/>
+                  <text value="Log Out"/>
+                </properties>
+              </component>
+              <tabbedpane id="d2dba" binding="tabbedPane1" default-binding="true">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="200" height="200"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-14668222"/>
+                  <font name="SansSerif" size="14" style="1"/>
+                  <foreground color="-3232172"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <grid id="5cffe" binding="pnlRsrvtn" layout-manager="GridLayoutManager" row-count="6" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <tabbedpane title="Reservation"/>
+                    </constraints>
+                    <properties>
+                      <background color="-15787741"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="c68c" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font name="Segoe UI Black" size="14"/>
+                          <foreground color="-3232172"/>
+                          <text value="RESERVATION MANAGEMENT"/>
+                        </properties>
+                      </component>
+                      <hspacer id="f47b6">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <grid id="7edc5" layout-manager="GridLayoutManager" row-count="12" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
+                        <margin top="10" left="10" bottom="10" right="10"/>
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="8" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-15063755"/>
+                          <enabled value="false"/>
+                          <font name="Segoe UI Black" size="14"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="4766f" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Guest Name"/>
+                            </properties>
+                          </component>
+                          <component id="eeb2a" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Email"/>
+                            </properties>
+                          </component>
+                          <component id="b16f8" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Phone"/>
+                            </properties>
+                          </component>
+                          <component id="8f15" class="javax.swing.JTextField" binding="txtGuestName">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <editable value="false"/>
+                              <enabled value="false"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="4c224" class="javax.swing.JTextField" binding="txtEmail">
+                            <constraints>
+                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="76aba" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Room"/>
+                            </properties>
+                          </component>
+                          <component id="ead5" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Check-in (MM-DD-YYYY)"/>
+                            </properties>
+                          </component>
+                          <component id="55c40" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Check-out (MM-DD-YYYY)"/>
+                            </properties>
+                          </component>
+                          <component id="4adeb" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="No. of Guests"/>
+                            </properties>
+                          </component>
+                          <component id="d548b" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Special Requests/Notes"/>
+                            </properties>
+                          </component>
+                          <component id="9f3b0" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Comments"/>
+                            </properties>
+                          </component>
+                          <component id="8fd2b" class="javax.swing.JTextField" binding="txtSpecialRequest">
+                            <constraints>
+                              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="12f3a" class="javax.swing.JTextField" binding="txtComments">
+                            <constraints>
+                              <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="569f" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="7" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Max. Capacity: 2 guests"/>
+                            </properties>
+                          </component>
+                          <component id="6ec29" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-7367463"/>
+                              <text value="Base Total:"/>
+                            </properties>
+                          </component>
+                          <component id="9aa2e" class="javax.swing.JTextField" binding="txtBaseTotal">
+                            <constraints>
+                              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <editable value="false"/>
+                              <enabled value="false"/>
+                            </properties>
+                          </component>
+                          <component id="9334a" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-3242940"/>
+                              <text value="Extra Guest Charge(200 per guest over Max Capacity):"/>
+                            </properties>
+                          </component>
+                          <component id="4d1d1" class="javax.swing.JTextField" binding="txtExtraCharge">
+                            <constraints>
+                              <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <editable value="false"/>
+                              <enabled value="false"/>
+                            </properties>
+                          </component>
+                          <component id="ae60" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI Black" size="16"/>
+                              <foreground color="-3232172"/>
+                              <text value="Total:"/>
+                            </properties>
+                          </component>
+                          <component id="b0c05" class="javax.swing.JTextField" binding="txtTotal">
+                            <constraints>
+                              <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-11969390"/>
+                              <editable value="false"/>
+                              <enabled value="false"/>
+                            </properties>
+                          </component>
+                          <component id="d139d" class="javax.swing.JButton" binding="btnAddReservation">
+                            <constraints>
+                              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <background color="-3232172"/>
+                              <font name="Segoe UI Black" size="14"/>
+                              <foreground color="-15787741"/>
+                              <text value="+Add Reservation"/>
+                            </properties>
+                          </component>
+                          <component id="7d746" class="javax.swing.JButton" binding="btnClearForm">
+                            <constraints>
+                              <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <font name="Segoe UI Black" size="14" style="1"/>
+                              <text value="Clear Form"/>
+                            </properties>
+                          </component>
+                          <component id="158ff" class="javax.swing.JComboBox" binding="cmbReservationRoom">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="4cafa" class="javax.swing.JTextField" binding="txtPhone">
+                            <constraints>
+                              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="58997" class="javax.swing.JTextField" binding="txtCheckIn">
+                            <constraints>
+                              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="7829b" class="javax.swing.JTextField" binding="txtCheckOut">
+                            <constraints>
+                              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="8c767" class="javax.swing.JSpinner" binding="spnrNumberOfGuest">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <background color="-14668222"/>
+                              <foreground color="-922881"/>
+                            </properties>
+                          </component>
+                          <component id="8ea2b" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <foreground color="-9797956"/>
+                              <text value="Create New Reservation(Direct Booking)"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <scrollpane id="a449f" binding="scrlPnGuestRsrv" custom-create="true">
+                        <constraints>
+                          <grid row="5" column="1" row-span="1" col-span="8" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-15063755"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="6f89f" class="javax.swing.JTable" binding="tblGuestRsrv">
+                            <constraints/>
+                            <properties>
+                              <background color="-15063755"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
+                      <vspacer id="571a0">
+                        <constraints>
+                          <grid row="1" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                            <preferred-size width="10" height="10"/>
+                          </grid>
+                        </constraints>
+                      </vspacer>
+                      <hspacer id="f9200">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <preferred-size width="10" height="10"/>
+                          </grid>
+                        </constraints>
+                      </hspacer>
+                      <component id="79d5c" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font name="Segoe UI Black" size="14"/>
+                          <foreground color="-922881"/>
+                          <text value="All Reservations"/>
+                        </properties>
+                      </component>
+                      <hspacer id="c39d9">
+                        <constraints>
+                          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <hspacer id="fe624">
+                        <constraints>
+                          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <component id="d6d92" class="javax.swing.JComboBox" binding="cmbFilter">
+                        <constraints>
+                          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-14467499"/>
+                          <model>
+                            <item value="All Statuses"/>
+                            <item value="Pending"/>
+                            <item value="Confirmed"/>
+                            <item value="Checked in"/>
+                            <item value="Checked Out"/>
+                            <item value="Cancelled"/>
+                            <item value="Declined"/>
+                          </model>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="352e6" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <tabbedpane title="Rooms"/>
+                    </constraints>
+                    <properties>
+                      <background color="-15787741"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="f2cac" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font name="Segoe UI Black" size="16"/>
+                          <foreground color="-3232172"/>
+                          <text value="Available Rooms"/>
+                        </properties>
+                      </component>
+                      <scrollpane id="64d5" binding="scrlPnGuestRooms" custom-create="true">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-15063755"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="149bf" class="javax.swing.JTable" binding="tblGuestRooms">
+                            <constraints/>
+                            <properties>
+                              <background color="-15063755"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                </children>
+              </tabbedpane>
+              <component id="b9c60" class="javax.swing.JLabel" binding="txtUserName">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="SansSerif" size="14"/>
+                  <foreground color="-922881"/>
+                  <text value="Guest"/>
+                </properties>
+              </component>
+              <component id="32a31" class="javax.swing.JTextField" binding="txtUserRole">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-9417703"/>
+                  <font name="SansSerif" size="14" style="1"/>
+                  <foreground color="-14379720"/>
+                  <text value="Guest"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
