@@ -50,7 +50,7 @@
                 <properties>
                   <background color="-14668222"/>
                   <font size="16"/>
-                  <foreground color="-3025959"/>
+                  <foreground color="-922881"/>
                   <horizontalAlignment value="0"/>
                 </properties>
               </component>
@@ -124,6 +124,7 @@
                 </constraints>
                 <properties>
                   <background color="-14668222"/>
+                  <foreground color="-922881"/>
                 </properties>
               </component>
               <component id="fc1c3" class="javax.swing.JLabel">
@@ -153,6 +154,7 @@
                 </constraints>
                 <properties>
                   <background color="-14668222"/>
+                  <foreground color="-922881"/>
                 </properties>
               </component>
               <component id="768d7" class="javax.swing.JButton" binding="btnBackToLogin">
