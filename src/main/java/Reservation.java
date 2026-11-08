@@ -2,15 +2,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Reservation {
-    static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+    public static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
-    int id;
-    String guestName, email, phone, room;
-    String checkIn, checkOut;
-    int numberOfGuests;
-    String specialRequest, comments;
-    double baseAmount, extraCharge;
-    String status = "Pending";
+    private int id;
+    private String guestName, email, phone, room;
+    private String checkIn, checkOut;
+    private int numberOfGuests;
+    private String specialRequest, comments;
+    private double baseAmount, extraCharge;
+    private String status = "Pending";
 
     public Reservation(int id, String guestName, String email, String phone, String room,
                        String checkIn, String checkOut, int numberOfGuests,
@@ -22,9 +22,28 @@ public class Reservation {
         this.comments = comments; this.baseAmount = baseAmount; this.extraCharge = extraCharge;
     }
 
-    double getTotal() { return baseAmount + extraCharge; }
+    //getters
+    public int getId() { return id; }
+    public String getGuestName() { return guestName; }
+    public String getEmail() { return email; }
+    public String getPhone() { return phone; }
+    public String getRoom() { return room; }
+    public String getCheckIn() { return checkIn; }
+    public String getCheckOut() { return checkOut; }
+    public int getNumberOfGuests() { return numberOfGuests; }
+    public String getSpecialRequest() { return specialRequest; }
+    public String getComments() { return comments; }
+    public double getBaseAmount() { return baseAmount; }
+    public double getExtraCharge() { return extraCharge; }
+    public String getStatus() { return status; }
 
-    String validate() {
+    //setters
+    public void setStatus(String status) { this.status = status; }
+    public void setExtraCharge(double extraCharge) { this.extraCharge = extraCharge; }
+
+    public double getTotal() { return baseAmount + extraCharge; }
+
+    public String validate() {
         if (guestName.isBlank()) return "Guest name is required.";
         if (!email.matches("^[\\w.+-]+@[\\w-]+\\.[\\w.]+$")) return "Enter a valid email.";
         if (!phone.matches("\\d{7,13}")) return "Phone must be 7-13 digits.";
@@ -44,7 +63,7 @@ public class Reservation {
         return null;
     }
 
-    Object[] toRow() {
+    public Object[] toRow() {
         return new Object[]{ id, guestName, email, phone, room, checkIn, checkOut,
                 baseAmount, extraCharge, getTotal(), status };
     }

@@ -14,7 +14,6 @@ public class Main {
 
     public Main() {
 
-        // yung | yes
         for (JTextField f : new JTextField[]{txtUsername, txtPassword}) {
             f.setBorder(BorderFactory.createCompoundBorder(
                     f.getBorder(),
@@ -39,24 +38,9 @@ public class Main {
                                 "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    JFrame frame;
-                    JPanel panel;
-
-                        //Admin Window
-                    if (role.equals("admin")) {
-                        frame = new JFrame("Administrator");
-                        panel = new AdminWindow().getAdminPanel();
-
-                        //Staff Window
-                    } else if (role.equals("staff")) {
-                        frame = new JFrame("Staff");
-                        panel = new StaffWindow().getStaffPanel();
-
-                        //Guest Window
-                    } else {
-                        frame = new JFrame("Guest");
-                        panel = new GuestWindow(username).getGuestPanel();
-                    }
+                    BaseWindow window = createWindow(role, username);
+                    JFrame frame = new JFrame(window.getWindowTitle());
+                    JPanel panel = window.getPanel();
 
                     frame.setContentPane(panel);
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,6 +85,15 @@ public class Main {
         });
     }
 
+
+    // picks the window class that matches the role
+    private BaseWindow createWindow(String role, String username) {
+        return switch (role) {
+            case "admin" -> new AdminWindow(username);
+            case "staff" -> new StaffWindow(username);
+            default      -> new GuestWindow(username);
+        };
+    }
 
     //Get Main Panel
     public JPanel getMainPanel(){
